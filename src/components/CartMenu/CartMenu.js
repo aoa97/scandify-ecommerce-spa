@@ -1,7 +1,7 @@
 import Lottie from "lottie-react";
 import { Component } from "react";
 import { Link } from "react-router-dom";
-import { handleTotalPrice } from "../../helpers.js/productHelpers";
+import { handleTotalPrice } from "../../helpers/productHelpers";
 import Dropdown from "../Dropdown/Dropdown";
 import StyledCartMenu from "./CartMenuStyled";
 import animation from "./animation.json";

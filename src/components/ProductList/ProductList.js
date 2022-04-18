@@ -26,7 +26,7 @@ class ProductList extends Component {
           <Link
             key={i}
             to={`/product/${p.id}`}
-            className={`product-${p.inStock}`}
+            // className={`product-${p.inStock}`}
           >
             <div className={`productItem ${p.inStock}`}>
               {/* Product Image */}

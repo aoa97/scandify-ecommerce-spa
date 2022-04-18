@@ -3,13 +3,20 @@ import { connect } from "react-redux";
 import { Helmet } from "react-helmet";
 import { getProductById } from "../../redux/actions/categoryActions";
 import { addToCart } from "../../redux/actions/cartActions";
-import { handlePrice } from "../../helpers.js/productHelpers";
+import { handlePrice } from "../../helpers/productHelpers";
 import StyledProductPage from "./ProductPageStyled";
 
 class ProductPage extends Component {
   state = {
     galleryImage: "",
+    selAttributes: {},
   };
+
+  handleAttributes(name, value) {
+    this.setState({
+      selAttributes: { ...this.state.selAttributes, [name]: value },
+    });
+  }
 
   componentDidMount() {
     this.props.getProductById(this.props.match.params.id);
@@ -20,6 +27,10 @@ class ProductPage extends Component {
     const { product: p, activeCurrency, addToCart } = this.props;
     const { galleryImage } = this.state;
     const { symbol, amount } = handlePrice(p.prices, activeCurrency);
+
+    const createDesc = (x) => {
+      return { __html: x };
+    };
 
     return (
       <>
@@ -53,26 +64,42 @@ class ProductPage extends Component {
               <p>{p?.name}</p>
             </div>
 
-            {p.attributes.length > 0 && (
-              <div className="product__sizes">
-                <h4>{p.attributes[0]?.name}:</h4>
+            {p.attributes.map((a, i) => (
+              <div key={i} className="product__sizes">
+                <h4>{a.name}:</h4>
 
                 <div className="product__sizes__btns">
-                  {p.attributes[0]?.items.map((s) => (
-                    <div key={s.id}>
-                      {p.attributes[0]?.name === "Color" ? (
+                  {a.name === "Color"
+                    ? a.items.map((x, j) => (
                         <button
-                          value={s.value}
-                          style={{ background: s.value }}
+                          key={j}
+                          value={x.value}
+                          style={{ background: x.value }}
+                          onClick={() => this.handleAttributes(a.name, x.value)}
+                          className={
+                            this.state.selAttributes[a.name] === x.value
+                              ? "color active-color"
+                              : "color"
+                          }
                         />
-                      ) : (
-                        <button value={s.value}>{s.value}</button>
-                      )}
-                    </div>
-                  ))}
+                      ))
+                    : a.items.map((x, j) => (
+                        <button
+                          key={j}
+                          value={x.value}
+                          onClick={() => this.handleAttributes(a.name, x.value)}
+                          className={
+                            this.state.selAttributes[a.name] === x.value
+                              ? "active"
+                              : ""
+                          }
+                        >
+                          {x.value}
+                        </button>
+                      ))}
                 </div>
               </div>
-            )}
+            ))}
 
             <div className="product__price">
               <h4>Price:</h4>
@@ -84,13 +111,17 @@ class ProductPage extends Component {
               )}
             </div>
 
-            <button className="product__cartBtn" onClick={() => addToCart(p.id)}>
+            <button
+              className="product__cartBtn"
+              onClick={() => addToCart(p.id, this.state.selAttributes)}
+            >
               Add to Cart
             </button>
 
-            <p className="product__desc">
-              {p.description?.replace(/(<([^>]+)>)/gi, "")}
-            </p>
+            <p
+              className="product__desc"
+              dangerouslySetInnerHTML={createDesc(p.description)}
+            />
           </div>
         </StyledProductPage>
       </>
@@ -110,7 +141,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getProductById: (id) => dispatch(getProductById(id)),
-    addToCart: (id) => dispatch(addToCart(id)),
+    addToCart: (id, selAttributes) => dispatch(addToCart(id, selAttributes)),
   };
 };
 

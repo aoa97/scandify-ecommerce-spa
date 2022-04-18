@@ -28,7 +28,7 @@ export const getCategoryData = (cat) => (dispatch, getState) => {
         description,
         category,
         prices { currency { label, symbol }, amount },
-        attributes { name, items { id, value, displayValue} },
+        attributes { id, name, items { id, value, displayValue} },
         gallery,
         inStock
       } 

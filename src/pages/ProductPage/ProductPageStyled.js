@@ -81,16 +81,32 @@ const ProductPageStyled = styled.div`
         column-gap: 1.2rem;
 
         button {
+          position: relative;
           width: 6.3rem;
           height: 4.5rem;
           font-size: 1.6rem;
           font-weight: 400;
           font-family: "Source Sans Pro", sans-serif;
           border: 1px solid ${({ theme }) => theme.colors.black};
+          transition: 0.3s all ease;
 
-          &:hover {
+          &:hover,
+          &.active {
             background: ${({ theme }) => theme.colors.black};
             color: ${({ theme }) => theme.colors.white};
+          }
+
+          &.active-color::after,
+          &.color:hover::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 5px;
+            right: 0;
+            bottom: -10px;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            background: ${({ theme }) => theme.colors.black};
           }
         }
       }

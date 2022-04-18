@@ -1,6 +1,6 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
-import { handlePrice } from "../../helpers.js/productHelpers";
+import { handlePrice } from "../../helpers/productHelpers";
 import StyledCartListProduct from "./CartListProductStyled";
 
 export default class CartListProduct extends Component {

@@ -1,6 +1,6 @@
 import { CART_ADD_ITEM, CART_UPDATE_QTY } from "../contstants/cartConstants";
 
-export const cartReducer = (state = [], action) => {
+export const cartReducer = (state = [{ selAttributes: {} }], action) => {
   const cart = JSON.parse(localStorage.getItem("cart")) || []; // Current Cart
 
   // Sort items to avoid mess in the array
@@ -13,14 +13,13 @@ export const cartReducer = (state = [], action) => {
   switch (action.type) {
     case CART_ADD_ITEM:
       const product = { qty: 1, ...action.payload };
-
       // Check if prodct exists
       const exist = cart.find((p) => p.id === action.payload.id);
-
+      
       if (exist) {
         return state;
       }
-
+      
       // If not exist, append it to cart
       const newCart = [...cart, product].sort(cartCompare);
       localStorage.setItem("cart", JSON.stringify(newCart));
