@@ -18,7 +18,17 @@ export default class CartMenuProduct extends Component {
   }
 
   render() {
-    const { product: p, activeCurrency } = this.props;
+    const { product: p, activeCurrency, closeMenu } = this.props;
+
+    const LinkToProduct = ({ children }) => (
+      <Link
+        to={`product/${p.id}`}
+        onClick={() => closeMenu()}
+        className="cartItem__img"
+      >
+        {children}
+      </Link>
+    );
 
     return (
       <StyledCartMenuProduct>
@@ -26,8 +36,12 @@ export default class CartMenuProduct extends Component {
           {/* Left Side */}
           <div className="cartItem__left">
             {/* Brand & Name */}
-            <h2 className="carItem__brand">{p.brand}</h2>
-            <h3 className="carItem__name">{p.name}</h3>
+            <LinkToProduct>
+              <h2 className="carItem__brand">{p.brand}</h2>
+            </LinkToProduct>
+            <LinkToProduct>
+              <h2 className="carItem__name">{p.name}</h2>
+            </LinkToProduct>
 
             {/* Price */}
             <h3 className="carItem__price">
@@ -76,9 +90,9 @@ export default class CartMenuProduct extends Component {
             </div>
 
             {/* Product Image */}
-            <Link to={`product/${p.id}`} className="cartItem__img">
+            <LinkToProduct>
               <img src={p.gallery[0]} alt="Product Image" />
-            </Link>
+            </LinkToProduct>
           </div>
         </div>
       </StyledCartMenuProduct>

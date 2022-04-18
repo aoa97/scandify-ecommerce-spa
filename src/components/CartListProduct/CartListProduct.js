@@ -1,4 +1,5 @@
 import { Component } from "react";
+import { Link } from "react-router-dom";
 import { handlePrice } from "../../helpers.js/productHelpers";
 import StyledCartListProduct from "./CartListProductStyled";
 
@@ -19,17 +20,32 @@ export default class CartListProduct extends Component {
   render() {
     const { product: p, activeCurrency } = this.props;
 
+    const LinkToProduct = ({ children }) => (
+      <Link to={`product/${p.id}`} className="cartItem__img">
+        {children}
+      </Link>
+    );
+
     return (
       <StyledCartListProduct>
         <div className="cartItem">
           <div className="cartItem__left">
-            <h2 className="carItem__brand">{p.brand}</h2>
-            <h3 className="carItem__name">{p.name}</h3>
+            {/* Brand & Name */}
+            <LinkToProduct>
+              <h2 className="carItem__brand">{p.brand}</h2>
+            </LinkToProduct>
+
+            <LinkToProduct>
+              <h2 className="carItem__name">{p.name}</h2>
+            </LinkToProduct>
+
+            {/* Price */}
             <h3 className="carItem__price">
               {handlePrice(p.prices, activeCurrency).symbol}
               {handlePrice(p.prices, activeCurrency).amount}
             </h3>
 
+            {/* Attributes */}
             <div className="product__sizes__btns">
               {p.attributes[0]?.name !== "Color" &&
                 p.attributes[0]?.items.map((s) => (
@@ -66,9 +82,9 @@ export default class CartListProduct extends Component {
               </div>
             </div>
 
-            <div className="cartItem__img">
+            <LinkToProduct className="cartItem__img">
               <img src={p.gallery[0]} alt="Product Image" />
-            </div>
+            </LinkToProduct>
           </div>
         </div>
       </StyledCartListProduct>

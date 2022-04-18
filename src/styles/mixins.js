@@ -13,5 +13,4 @@ export const flexSpaceBetween = () => `
 export const container = () => `
     margin: 0 auto;
     padding: 0 5vw;
-
 `;

@@ -16,8 +16,8 @@ const StyledCartMenuProduct = styled.div`
       .carItem__name {
         font-size: 1.6rem;
         font-weight: 300;
-        line-height: 2.5rem;
       }
+
       .carItem__price {
         font-size: 1.6rem;
         font-weight: 500;
@@ -56,6 +56,7 @@ const StyledCartMenuProduct = styled.div`
 
         .counter__operator {
           ${flexCenter}
+          cursor: pointer;
           width: fit-content;
           height: fit-content;
           padding: 0.1rem 0.5rem;

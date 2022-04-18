@@ -12,7 +12,7 @@ export default class CartMenu extends Component {
     const { activeCurrency, cart } = this.props;
 
     return (
-      <Dropdown>
+      <Dropdown closeMenu={this.props.closeMenu}>
         <StyledCartMenu>
           {/* Header */}
           <h2 className="cartMenu__header">
@@ -37,6 +37,7 @@ export default class CartMenu extends Component {
                     product={p}
                     activeCurrency={activeCurrency}
                     updateQty={this.props.updateQty}
+                    closeMenu={this.props.closeMenu}
                   />
                 ))}
               </div>
@@ -51,7 +52,11 @@ export default class CartMenu extends Component {
 
           {/* Buttons */}
           <div className="cartMenu__buttons">
-            <Link to="/cart" className="btn view-btn">
+            <Link
+              to="/cart"
+              className="btn view-btn"
+              onClick={() => this.props.closeMenu()}
+            >
               View Bag
             </Link>
             <div className="btn check-btn">Checkout</div>

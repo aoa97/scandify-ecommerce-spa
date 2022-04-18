@@ -41,6 +41,7 @@ const StyledNavbar = styled.nav`
 
   /* Right */
   .nav__right {
+    position: relative;
     flex: 1;
     flex-shrink: 1;
     display: flex;

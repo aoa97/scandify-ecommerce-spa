@@ -1,17 +1,21 @@
 import { Component } from "react";
 import { connect } from "react-redux";
-import {
-  setActiveCurrency,
-} from "../../redux/actions/currenciesActions";
+import { setActiveCurrency } from "../../redux/actions/currenciesActions";
 import Dropdown from "../Dropdown/Dropdown";
 import StyledCurrencyMenu from "./CurrencyMenuStyled";
 
 class CurrencyMenu extends Component {
+  handleActiveCurrency(c) {
+    const { setActiveCurrency, closeMenu } = this.props;
+    setActiveCurrency(c);
+    closeMenu()
+  }
+
   render() {
-    const { currencies, activeCurrency, setActiveCurrency } = this.props;
+    const { currencies, activeCurrency } = this.props;
 
     return (
-      <Dropdown>
+      <Dropdown closeMenu={this.props.closeMenu}>
         <StyledCurrencyMenu>
           {currencies.map((c, i) => (
             <div
@@ -21,7 +25,7 @@ class CurrencyMenu extends Component {
                   ? "currency__item active"
                   : "currency__item"
               }`}
-              onClick={() => setActiveCurrency(c)}
+              onClick={() => this.handleActiveCurrency(c)}
             >
               <span>{c.symbol}</span>
               <span>{c.label}</span>

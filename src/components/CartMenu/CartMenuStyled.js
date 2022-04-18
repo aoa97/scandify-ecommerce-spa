@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { flexSpaceBetween } from "../../styles/mixins";
 
 const StyledCartMenu = styled.div`
-  min-width: 30rem;
+ width: 30rem;
 
   .cartMenu__header {
     font-size: 2.56rem;

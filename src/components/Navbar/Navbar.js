@@ -79,15 +79,7 @@ class Navbar extends Component {
             }
           >
             <span>{this.props.activeCurrency?.symbol}</span>
-
-            {this.state.currencyMenu ? (
-              <>
-                <IconChevronDown rotate="true" />
-                <CurrencyMenu />
-              </>
-            ) : (
-              <IconChevronDown />
-            )}
+            <IconChevronDown />
           </div>
 
           <div
@@ -97,16 +89,25 @@ class Navbar extends Component {
             <div className="badge">{this.props.cart.length}</div>
 
             <IconCart />
-
-            {this.state.cartMenu && (
-              <CartMenu
-                cart={this.props.cart}
-                activeCurrency={this.props.activeCurrency}
-                updateQty={this.props.updateQty}
-              />
-            )}
           </div>
         </div>
+
+        {/* Currency Dropdown Menu */}
+        {this.state.currencyMenu && (
+          <CurrencyMenu
+            closeMenu={() => this.setState({ currencyMenu: false })}
+          />
+        )}
+
+        {/* Cart Dropdown Menu */}
+        {this.state.cartMenu && (
+          <CartMenu
+            cart={this.props.cart}
+            activeCurrency={this.props.activeCurrency}
+            updateQty={this.props.updateQty}
+            closeMenu={() => this.setState({ cartMenu: false })}
+          />
+        )}
       </StyledNavbar>
     );
   }
