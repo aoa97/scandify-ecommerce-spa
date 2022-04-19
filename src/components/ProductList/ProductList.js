@@ -1,6 +1,7 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { animated, Spring } from "react-spring";
 import { IconCartW } from "../../components/svg/IconSVG";
 import { addToCart } from "../../redux/actions/cartActions";
 import StyledProductList from "./ProductListStyled";
@@ -21,41 +22,47 @@ class ProductList extends Component {
 
   render() {
     return (
-      <StyledProductList>
-        {this.props.products.map((p, i) => (
-          <Link
-            key={i}
-            to={`/product/${p.id}`}
-            // className={`product-${p.inStock}`}
-          >
-            <div className={`productItem ${p.inStock}`}>
-              {/* Product Image */}
-              <div className="productItem__img">
-                <img src={p.gallery[0]} />
-
-                {/* Cart Icon (Only on hover) */}
-                <div
-                  className="productItem__cart"
-                  onClick={(e) => this.handleAddToCart(e, p.id)}
+      <Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
+        {(styles) => (
+          <animated.div style={styles}>
+            <StyledProductList>
+              {this.props.products.map((p, i) => (
+                <Link
+                  key={i}
+                  to={`/product/${p.id}`}
+                  // className={`product-${p.inStock}`}
                 >
-                  <IconCartW />
-                </div>
-              </div>
+                  <div className={`productItem ${p.inStock}`}>
+                    {/* Product Image */}
+                    <div className="productItem__img">
+                      <img src={p.gallery[0]} />
 
-              {/* Product Name */}
-              <span className="productItem__name">{p.name}</span>
+                      {/* Cart Icon (Only on hover) */}
+                      <div
+                        className="productItem__cart"
+                        onClick={(e) => this.handleAddToCart(e, p.id)}
+                      >
+                        <IconCartW />
+                      </div>
+                    </div>
 
-              {/* Product Price */}
-              {this.props.activeCurrency && (
-                <span className="productItem__price">
-                  {this.handlePrice(p.prices).currency.symbol}
-                  {this.handlePrice(p.prices).amount}
-                </span>
-              )}
-            </div>
-          </Link>
-        ))}
-      </StyledProductList>
+                    {/* Product Name */}
+                    <span className="productItem__name">{p.name}</span>
+
+                    {/* Product Price */}
+                    {this.props.activeCurrency && (
+                      <span className="productItem__price">
+                        {this.handlePrice(p.prices).currency.symbol}
+                        {this.handlePrice(p.prices).amount}
+                      </span>
+                    )}
+                  </div>
+                </Link>
+              ))}
+            </StyledProductList>
+          </animated.div>
+        )}
+      </Spring>
     );
   }
 }

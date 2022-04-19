@@ -1,7 +1,6 @@
 import { Component } from "react";
 import { Helmet } from "react-helmet";
 import { connect } from "react-redux";
-import { CSSTransition } from "react-transition-group";
 import { Loader, ProductList } from "../../components";
 import HomePageStyled from "./HomePageStyled";
 
@@ -13,14 +12,7 @@ class HomePage extends Component {
           <title>Welcome to Scandify</title>
         </Helmet>
 
-        <CSSTransition
-          in={this.props.loading}
-          timeout={1000}
-          unmountOnExit
-          classNames="my-node"
-        >
-          <Loader />
-        </CSSTransition>
+        {this.props.loading && <Loader />}
 
         {!this.props.loading && (
           <HomePageStyled>
