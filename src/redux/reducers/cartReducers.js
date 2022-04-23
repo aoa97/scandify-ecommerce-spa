@@ -1,4 +1,8 @@
-import { CART_ADD_ITEM, CART_UPDATE_QTY } from "../contstants/cartConstants";
+import {
+  CART_ADD_ITEM,
+  CART_UPDATE_QTY,
+  CART_UPDATE_SELATTRIBUTES,
+} from "../contstants/cartConstants";
 
 export const cartReducer = (state = [{ selAttributes: {} }], action) => {
   const cart = JSON.parse(localStorage.getItem("cart")) || []; // Current Cart
@@ -11,20 +15,23 @@ export const cartReducer = (state = [{ selAttributes: {} }], action) => {
   };
 
   switch (action.type) {
+    /* Add item to product */
     case CART_ADD_ITEM:
       const product = { qty: 1, ...action.payload };
       // Check if prodct exists
       const exist = cart.find((p) => p.id === action.payload.id);
-      
+
       if (exist) {
         return state;
       }
-      
+
       // If not exist, append it to cart
       const newCart = [...cart, product].sort(cartCompare);
       localStorage.setItem("cart", JSON.stringify(newCart));
 
       return newCart;
+
+    /* Update product Qunatity */
     case CART_UPDATE_QTY:
       const { id, qty } = action.payload;
 
@@ -42,6 +49,18 @@ export const cartReducer = (state = [{ selAttributes: {} }], action) => {
       const updatedCart = [...filteredCart, item].sort(cartCompare);
       localStorage.setItem("cart", JSON.stringify(updatedCart));
       return updatedCart;
+
+    /* Update product selected attributes */
+    case CART_UPDATE_SELATTRIBUTES:
+      const { id2, selAttributes } = action.payload;
+
+      // Update
+      const item2 = cart.find((p) => p.id === id2);
+      item2.selAttributes = selAttributes;
+      const filteredCart2 = cart.filter((p) => p.id !== id2);
+      const updatedCart2 = [...filteredCart2, item2].sort(cartCompare);
+      localStorage.setItem("cart", JSON.stringify(updatedCart2));
+      return updatedCart2;
     default:
       return state;
   }

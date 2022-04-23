@@ -1,4 +1,8 @@
-import { CART_ADD_ITEM, CART_UPDATE_QTY } from "../contstants/cartConstants";
+import {
+  CART_ADD_ITEM,
+  CART_UPDATE_QTY,
+  CART_UPDATE_SELATTRIBUTES,
+} from "../contstants/cartConstants";
 
 export const addToCart = (id, selAttributes) => (dispatch, getState) => {
   const item = getState().categoryData.category.products.find(
@@ -10,4 +14,8 @@ export const addToCart = (id, selAttributes) => (dispatch, getState) => {
 
 export const updateQty = (item) => (dispatch, getState) => {
   dispatch({ type: CART_UPDATE_QTY, payload: item });
+};
+
+export const updateSelAttributes = (item) => (dispatch, getState) => {
+  dispatch({ type: CART_UPDATE_SELATTRIBUTES, payload: item });
 };

@@ -1,12 +1,21 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
-import { handlePrice } from "../../helpers/productHelpers";
+import { connect } from "react-redux";
+import { calcPrice } from "../../helpers/productHelpers";
+import { updateSelAttributes } from "./../../redux/actions/cartActions";
 import StyledCartListProduct from "./CartListProductStyled";
 
-export default class CartListProduct extends Component {
+class CartListProduct extends Component {
   state = {
     qty: this.props.product.qty,
+    selAttributes: this.props.product.selAttributes,
   };
+
+  handleAttributes(name, value) {
+    this.setState({
+      selAttributes: { ...this.state.selAttributes, [name]: value },
+    });
+  }
 
   componentDidUpdate(prevProp, prevState) {
     if (prevState.qty !== this.state.qty) {
@@ -15,11 +24,18 @@ export default class CartListProduct extends Component {
         qty: this.state.qty,
       });
     }
+
+    if (prevState.selAttributes !== this.state.selAttributes) {
+      this.props.updateSelAttributes({
+        id2: this.props.product.id,
+        selAttributes: this.state.selAttributes,
+      });
+    }
   }
 
   render() {
     const { product: p, activeCurrency } = this.props;
-
+  
     const LinkToProduct = ({ children }) => (
       <Link to={`product/${p.id}`} className="cartItem__img">
         {children}
@@ -40,27 +56,43 @@ export default class CartListProduct extends Component {
             </LinkToProduct>
 
             {/* Price */}
-            <h3 className="carItem__price">
-              {handlePrice(p.prices, activeCurrency).symbol}
-              {handlePrice(p.prices, activeCurrency).amount}
-            </h3>
+            <h3 className="carItem__price">{calcPrice(p.prices, activeCurrency)}</h3>
 
             {/* Attributes */}
-            <div className="product__sizes__btns">
-              {p.attributes[0]?.name !== "Color" &&
-                p.attributes[0]?.items.map((s) => (
-                  <div key={s.id}>
-                    <button value={s.value}>{s.value}</button>
-                  </div>
-                ))}
+            {p.attributes?.map((a, i) => (
+              <div key={i} className="product__sizes">
+                <h4>{a.name}:</h4>
 
-              {p.attributes[0]?.name === "Color" &&
-                p.attributes[1]?.items.map((s) => (
-                  <div key={s.id}>
-                    <button value={s.value}>{s.value}</button>
-                  </div>
-                ))}
-            </div>
+                <div className="product__sizes__btns">
+                  {a.name === "Color"
+                    ? a.items.map((x, j) => (
+                        <button
+                          key={j}
+                          value={x.value}
+                          style={{ background: x.value }}
+                          onClick={() => this.handleAttributes(a.name, x.value)}
+                          className={
+                            p.selAttributes[a.name] === x.value
+                              ? "color active-color"
+                              : "color"
+                          }
+                        />
+                      ))
+                    : a.items.map((x, j) => (
+                        <button
+                          key={j}
+                          value={x.value}
+                          onClick={() => this.handleAttributes(a.name, x.value)}
+                          className={
+                            p.selAttributes[a.name] === x.value ? "active" : ""
+                          }
+                        >
+                          {x.value}
+                        </button>
+                      ))}
+                </div>
+              </div>
+            ))}
           </div>
 
           <div className="cartItem__right">
@@ -91,3 +123,11 @@ export default class CartListProduct extends Component {
     );
   }
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateSelAttributes: (item) => dispatch(updateSelAttributes(item)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(CartListProduct);

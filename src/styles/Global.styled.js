@@ -1,9 +1,10 @@
 import { createGlobalStyle } from "styled-components";
-import { container } from "../../styles/mixins";
+import { container } from "./mixins";
 
 const Global = createGlobalStyle`
     html {
         font-size: 10px;
+        scroll-behavior: smooth;
     }
 
     body {

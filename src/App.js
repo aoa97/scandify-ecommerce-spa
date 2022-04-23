@@ -1,13 +1,15 @@
 import { Component } from "react";
-import { BrowserRouter as Router, Route, Switch, RouteProps } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
 import { ThemeProvider } from "styled-components";
 
+import { Navbar } from "./components";
 import store from "./redux/store";
 import theme from "./styles/theme";
-import Global from "./components/styled/Global.styled";
-import { Navbar } from "./components";
-import { HomePage, ProductPage, CartPage } from "./pages";
+import Global from "./styles/Global.styled";
+import Home from "./pages/Home";
+import Product from "./pages/Product";
+import CartPage from "./pages/CartPage/CartPage";
 
 export default class App extends Component {
   render() {
@@ -19,9 +21,9 @@ export default class App extends Component {
             <Navbar />
             <main>
               <Switch>
-                <Route path="/product/:id" component={ProductPage} />
+                <Route path="/product/:id" component={Product} />
                 <Route path="/cart" component={CartPage} />
-                <Route path="/" component={HomePage} />
+                <Route path="/" component={Home} />
               </Switch>
             </main>
           </Router>

@@ -1,7 +1,7 @@
 import Lottie from "lottie-react";
 import { Component } from "react";
 import { Link } from "react-router-dom";
-import { handleTotalPrice } from "../../helpers/productHelpers";
+import { calcTotalPrice } from "../../helpers/productHelpers";
 import Dropdown from "../Dropdown/Dropdown";
 import StyledCartMenu from "./CartMenuStyled";
 import animation from "./animation.json";
@@ -10,6 +10,7 @@ import CartMenuProduct from "../CartMenuProduct/CartMenuProduct";
 export default class CartMenu extends Component {
   render() {
     const { activeCurrency, cart } = this.props;
+    const totalPrice = calcTotalPrice(cart, activeCurrency);
 
     return (
       <Dropdown closeMenu={this.props.closeMenu}>
@@ -45,7 +46,7 @@ export default class CartMenu extends Component {
               {/* Total Price*/}
               <div className="cartMenu__total">
                 <h4>Total</h4>
-                <h5>{handleTotalPrice(cart, activeCurrency)}</h5>
+                <h5>{totalPrice}</h5>
               </div>
             </>
           )}

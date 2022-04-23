@@ -25,22 +25,44 @@ const StyledCartListProduct = styled.div`
         margin-bottom: 1.2rem;
       }
 
-      .product__sizes__btns {
-        display: flex;
-        gap: 1.2rem;
+      .product__sizes {
+        h4 {
+          font-weight: 700;
+          text-transform: uppercase;
+          margin-bottom: 0.8rem;
+        }
 
-        button {
-          width: 6.3rem;
-          height: 4.5rem;
-          font-size: 1.6rem;
-          font-weight: 400;
-          font-family: "Source Sans Pro", sans-serif;
-          border: 1px solid ${({ theme }) => theme.colors.black};
-          transition: 0.5s all ease;
+        .product__sizes__btns {
+          display: flex;
+          gap: 1.2rem;
 
-          &:hover {
-            background: ${({ theme }) => theme.colors.black};
-            color: ${({ theme }) => theme.colors.white};
+          button {
+            width: 6.3rem;
+            height: 4.5rem;
+            font-size: 1.6rem;
+            font-weight: 400;
+            font-family: "Source Sans Pro", sans-serif;
+            border: 1px solid ${({ theme }) => theme.colors.black};
+            transition: 0.5s all ease;
+
+            &:hover,
+            &.active {
+              background: ${({ theme }) => theme.colors.black};
+              color: ${({ theme }) => theme.colors.white};
+            }
+
+            &.active-color::after,
+            &.color:hover::after {
+              content: "";
+              position: absolute;
+              width: 100%;
+              height: 5px;
+              right: 0;
+              bottom: -10px;
+              border-bottom-left-radius: 10px;
+              border-bottom-right-radius: 10px;
+              background: ${({ theme }) => theme.colors.black};
+            }
           }
         }
       }

@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { flexSpaceBetween, flexCenter } from "../../styles/mixins";
 
 const StyledCurrencyMenu = styled.div`
   .currency__item {

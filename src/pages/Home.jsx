@@ -1,34 +1,40 @@
+import styled from "styled-components";
 import { Component } from "react";
 import { Helmet } from "react-helmet";
 import { connect } from "react-redux";
-import { Loader, ProductList } from "../../components";
-import HomePageStyled from "./HomePageStyled";
+import { Loader, ProductList } from "../components";
 
 class HomePage extends Component {
   render() {
+    const { history, category, loading } = this.props;
+
     return (
       <>
         <Helmet>
           <title>Welcome to Scandify</title>
         </Helmet>
 
-        {this.props.loading && <Loader />}
+        {loading && <Loader />}
 
-        {!this.props.loading && (
+        {!loading && (
           <HomePageStyled>
-            {/* Top Heading */}
-            <h1>{this.props.category.name.toUpperCase()}</h1>
-
-            {/* Product List */}
-            {this.props.category && (
-              <ProductList products={this.props.category.products} />
-            )}
+            <h1>{category.name.toUpperCase()}</h1>
+            <ProductList nav={history.push} products={category.products} />
           </HomePageStyled>
         )}
       </>
     );
   }
 }
+
+const HomePageStyled = styled.div`
+  padding: 8rem 0;
+
+  h1 {
+    font-size: 4.2rem;
+    font-weight: 400;
+  }
+`;
 
 const mapStateToProps = (state) => {
   return {

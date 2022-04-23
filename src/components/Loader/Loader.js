@@ -1,6 +1,7 @@
 import { Component } from "react";
 import Lottie from "lottie-react";
 import loader from "./loader.json";
+import styled from "styled-components";
 
 export default class Loader extends Component {
   componentDidMount() {
@@ -15,16 +16,26 @@ export default class Loader extends Component {
 
   render() {
     return (
-      <div
-        style={{
-          height: "100vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Lottie animationData={loader} style={{ width: 200, height: 200 }} />
-      </div>
+      <StyledLoader>
+        <Lottie
+          className="loader"
+          animationData={loader}
+          loop={true}
+          autoPlay={true}
+        />
+      </StyledLoader>
     );
   }
 }
+
+const StyledLoader = styled.div`
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .loader {
+    width: 200px;
+    height: 200px;
+  }
+`;

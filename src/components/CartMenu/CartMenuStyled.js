@@ -2,11 +2,12 @@ import styled from "styled-components";
 import { flexSpaceBetween } from "../../styles/mixins";
 
 const StyledCartMenu = styled.div`
- width: 30rem;
+  width: fit-content;
 
   .cartMenu__header {
     font-size: 2.56rem;
     font-weight: 700;
+    padding-bottom: 1.5rem;
 
     span {
       font-size: 1.6rem;
@@ -17,6 +18,9 @@ const StyledCartMenu = styled.div`
   .cartMenu__products {
     max-height: 60vh;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    row-gap: 1.5rem;
   }
 
   .cartMenu__total {
@@ -44,7 +48,7 @@ const StyledCartMenu = styled.div`
       text-transform: uppercase;
       text-align: center;
       opacity: 0.7;
-      transition: .5s all ease;
+      transition: 0.5s all ease;
 
       &:hover {
         opacity: 1;
@@ -68,38 +72,34 @@ const StyledCartMenu = styled.div`
 
   .empty-cart {
     padding: 3rem;
+    width: 35rem;
+    height: 35rem;
+    margin: 0 auto;
   }
 
-  @media (max-width: 385px) {
-    min-width: 70vw;
+  @media (max-width: 330px) {
+    width: 85vw;
 
     .cartMenu__products {
       display: flex;
       flex-direction: column;
-      align-items: center;
 
       .cartItem {
         align-items: stretch;
-        flex-direction: column-reverse;
+        flex-direction: column;
         row-gap: 2rem;
 
-        .cartItem__left {
-          .product__sizes__btns {
-            flex-wrap: wrap;
-          }
-        }
-
         .cartItem__right {
-          flex-direction: column-reverse;
-
+          /* flex-direction: column-reverse; */
           .cartItem__img {
-            width: 100%;
-            margin-bottom: 1rem;
+            display: none;
           }
 
           .counter {
+            margin: 0;
+            width: 50%;
             flex-direction: row;
-            justify-content: space-evenly;
+            justify-content: space-between;
           }
         }
       }
