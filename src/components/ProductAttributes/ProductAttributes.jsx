@@ -1,8 +1,9 @@
 import { Component } from "react";
 import {
   AttributeBtn,
-  AttributeWrapper,
+  AttributeBtns,
   AttributeItem,
+  Container
 } from "./ProductAttributes.styles";
 
 export default class ProductData extends Component {
@@ -21,12 +22,12 @@ export default class ProductData extends Component {
     const { selAttributes } = this.state;
 
     return (
-      <>
+      <Container>
         {attributes.map((a, i) => (
           <AttributeItem key={i}>
             <h4>{a.name}:</h4>
 
-            <AttributeWrapper>
+            <AttributeBtns>
               {a.items.map((x, j) => (
                 <AttributeBtn
                   key={j}
@@ -38,10 +39,10 @@ export default class ProductData extends Component {
                   {a.name !== "Color" && x.value}
                 </AttributeBtn>
               ))}
-            </AttributeWrapper>
+            </AttributeBtns>
           </AttributeItem>
         ))}
-      </>
+      </Container>
     );
   }
 }

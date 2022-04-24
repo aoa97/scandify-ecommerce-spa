@@ -21,10 +21,11 @@ export const AttributeBtn = styled.button`
   `}
 
   /* Color Attribute */
-  ${({ colorAttr, theme }) => colorAttr &&
-    `
+  ${({ colorAttr, theme }) => colorAttr &&`
     background: ${colorAttr};
     position: relative;
+    width: 3.2rem;
+    height: 3.2rem;
 
     &:hover{
       background: ${colorAttr};
@@ -44,7 +45,7 @@ export const AttributeBtn = styled.button`
   `}
 
   /* Active Color Attribute Case */
-  ${({ colorAttr, active, theme }) => colorAttr && active && `
+  ${({ colorAttr, active, theme }) => colorAttr && active &&`
     &::after {
       content: "";
       position: absolute;
@@ -57,22 +58,26 @@ export const AttributeBtn = styled.button`
       background: ${theme.colors.black};
     }
   `}
-
 `;
 
-export const AttributeWrapper = styled.div`
+export const AttributeBtns = styled.div`
   display: flex;
   align-items: center;
-  column-gap: 1.2rem;
+  flex-wrap: wrap;
+  gap: 1.2rem;
 `;
 
 export const AttributeItem = styled.div`
-  margin-top: 4.3rem;
-
   h4 {
     font-size: 1.8rem;
     font-weight: 700;
     text-transform: uppercase;
     margin-bottom: 0.8rem;
   }
+`;
+
+export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.6rem;
 `;

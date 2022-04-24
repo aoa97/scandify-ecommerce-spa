@@ -1,8 +1,8 @@
 import { Component } from "react";
 import { calcPrice } from "../../helpers/productHelpers";
+import { BtnPrimary } from "../../styles/Components.styled";
 import ProductAttributes from "../ProductAttributes/ProductAttributes";
 import {
-  Button,
   Container,
   Description,
   Gallery,
@@ -21,7 +21,7 @@ export default class ProductData extends Component {
   render() {
     const { product: p, activeCurrency, addToCart } = this.props;
     const { galleryImage } = this.state;
-    
+
     const createDesc = (x) => {
       return { __html: x };
     };
@@ -30,14 +30,15 @@ export default class ProductData extends Component {
       <Container>
         <Left>
           <Gallery>
-            {p.gallery.map((img, i) => (
-              <img
-                key={i}
-                src={img}
-                className={galleryImage === img ? "active" : ""}
-                onClick={() => this.setState({ galleryImage: img })}
-              />
-            ))}
+            {p.gallery.length > 1 &&
+              p.gallery.map((img, i) => (
+                <img
+                  key={i}
+                  src={img}
+                  className={galleryImage === img ? "active" : ""}
+                  onClick={() => this.setState({ galleryImage: img })}
+                />
+              ))}
           </Gallery>
 
           <Preview>
@@ -56,12 +57,14 @@ export default class ProductData extends Component {
           <Price>
             <h4>Price:</h4>
 
-            {activeCurrency && <span>{calcPrice(p.prices, activeCurrency)}</span>}
+            {activeCurrency && (
+              <span>{calcPrice(p.prices, activeCurrency)}</span>
+            )}
           </Price>
 
-          <Button onClick={() => addToCart(p.id, this.state.selAttributes)}>
+          <BtnPrimary onClick={() => addToCart(p.id, this.state.selAttributes)}>
             Add to Cart
-          </Button>
+          </BtnPrimary>
 
           <Description dangerouslySetInnerHTML={createDesc(p.description)} />
         </Right>

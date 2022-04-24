@@ -9,7 +9,7 @@ import theme from "./styles/theme";
 import Global from "./styles/Global.styled";
 import Home from "./pages/Home";
 import Product from "./pages/Product";
-import CartPage from "./pages/CartPage/CartPage";
+import Cart from "./pages/Cart";
 
 export default class App extends Component {
   render() {
@@ -22,7 +22,7 @@ export default class App extends Component {
             <main>
               <Switch>
                 <Route path="/product/:id" component={Product} />
-                <Route path="/cart" component={CartPage} />
+                <Route path="/cart" component={Cart} />
                 <Route path="/" component={Home} />
               </Switch>
             </main>

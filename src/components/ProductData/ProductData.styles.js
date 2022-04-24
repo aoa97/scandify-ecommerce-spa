@@ -13,24 +13,8 @@ export const Description = styled.div`
   row-gap: 1.5rem;
 `;
 
-export const Button = styled.button`
-  margin-top: 2rem;
-  width: 100%;
-  height: 5.2rem;
-  background: ${({ theme }) => theme.colors.primary};
-  color: ${({ theme }) => theme.colors.white};
-  font-size: 1.6rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  opacity: 0.9;
-
-  &:hover {
-    opacity: 1;
-  }
-`;
-
 export const Price = styled.div`
-  margin-top: 4rem;
+  margin-top: 3.6rem;
 
   h4 {
     font-size: 1.8rem;
@@ -46,6 +30,8 @@ export const Price = styled.div`
 `;
 
 export const Title = styled.div`
+  margin-bottom: 4.3rem;
+
   /* Brand */
   h2 {
     font-size: 3rem;

@@ -112,3 +112,41 @@ export const IconEmptyCart = (props) => (
     />
   </svg>
 );
+
+export const IconSlideLeft = (props) => (
+  <svg
+    width={24}
+    height={24}
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <path fill="#000" fillOpacity={0.73} d="M0 0h24v24H0z" />
+    <path
+      d="m14.25 6.069-5.625 5.619 5.625 5.619"
+      stroke="#fff"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+export const IconSlideRight = (props) => (
+  <svg
+    width={24}
+    height={24}
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <path fill="#000" fillOpacity={0.73} d="M24 0H0v24h24z" />
+    <path
+      d="m9.75 6.069 5.625 5.619-5.625 5.619"
+      stroke="#fff"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);

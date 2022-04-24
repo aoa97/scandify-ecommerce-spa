@@ -5,14 +5,8 @@ import Dropdown from "../Dropdown/Dropdown";
 import StyledCurrencyMenu from "./CurrencyMenuStyled";
 
 class CurrencyMenu extends Component {
-  handleActiveCurrency(c) {
-    const { setActiveCurrency, closeMenu } = this.props;
-    setActiveCurrency(c);
-    closeMenu()
-  }
-
   render() {
-    const { currencies, activeCurrency } = this.props;
+    const { currencies, activeCurrency, setActiveCurrency } = this.props;
 
     return (
       <Dropdown closeMenu={this.props.closeMenu}>
@@ -25,7 +19,7 @@ class CurrencyMenu extends Component {
                   ? "currency__item active"
                   : "currency__item"
               }`}
-              onClick={() => this.handleActiveCurrency(c)}
+              onClick={() => setActiveCurrency(c)}
             >
               <span>{c.symbol}</span>
               <span>{c.label}</span>

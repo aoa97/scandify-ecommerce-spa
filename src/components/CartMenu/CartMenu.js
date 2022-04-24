@@ -10,7 +10,7 @@ import CartMenuProduct from "../CartMenuProduct/CartMenuProduct";
 export default class CartMenu extends Component {
   render() {
     const { activeCurrency, cart } = this.props;
-    const totalPrice = calcTotalPrice(cart, activeCurrency);
+    const { totalPrice } = calcTotalPrice(cart, activeCurrency);
 
     return (
       <Dropdown closeMenu={this.props.closeMenu}>

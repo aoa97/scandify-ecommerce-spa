@@ -2,13 +2,16 @@ import { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { calcPrice } from "../../helpers/productHelpers";
-import { updateSelAttributes } from "./../../redux/actions/cartActions";
-import StyledCartListProduct from "./CartListProductStyled";
+import { updateSelAttributes } from "../../redux/actions/cartActions";
+import { Container, Left, Right } from "./CartListProduct.styles";
+import { IconSlideLeft, IconSlideRight } from "../svg/IconSVG";
+import ProductAttributes from "../ProductAttributes/ProductAttributes";
+import Counter from "../Counter/Counter";
 
 class CartListProduct extends Component {
   state = {
-    qty: this.props.product.qty,
     selAttributes: this.props.product.selAttributes,
+    imgIndex: 0,
   };
 
   handleAttributes(name, value) {
@@ -17,109 +20,64 @@ class CartListProduct extends Component {
     });
   }
 
-  componentDidUpdate(prevProp, prevState) {
-    if (prevState.qty !== this.state.qty) {
-      this.props.updateQty({
-        id: this.props.product.id,
-        qty: this.state.qty,
-      });
-    }
+  handlePreviousImage = (e) => {
+    e.preventDefault();
+    const { imgIndex } = this.state;
+    const { gallery } = this.props.product;
 
-    if (prevState.selAttributes !== this.state.selAttributes) {
-      this.props.updateSelAttributes({
-        id2: this.props.product.id,
-        selAttributes: this.state.selAttributes,
-      });
-    }
-  }
+    this.setState({
+      imgIndex: imgIndex === 0 ? gallery.length - 1 : imgIndex - 1,
+    });
+  };
+
+  handleNextImage = (e) => {
+    e.preventDefault();
+    const { imgIndex } = this.state;
+    const { gallery } = this.props.product;
+
+    this.setState({
+      imgIndex: imgIndex === gallery.length - 1 ? 0 : imgIndex + 1,
+    });
+  };
 
   render() {
     const { product: p, activeCurrency } = this.props;
-  
-    const LinkToProduct = ({ children }) => (
-      <Link to={`product/${p.id}`} className="cartItem__img">
+    const { imgIndex } = this.state;
+
+    const LinkToProduct = ({ children, ...otherProps }) => (
+      <Link to={`product/${p.id}`} {...otherProps}>
         {children}
       </Link>
     );
 
     return (
-      <StyledCartListProduct>
-        <div className="cartItem">
-          <div className="cartItem__left">
-            {/* Brand & Name */}
-            <LinkToProduct>
-              <h2 className="carItem__brand">{p.brand}</h2>
-            </LinkToProduct>
+      <Container>
+        <Left>
+          <LinkToProduct>
+            <h2 className="brand">{p.brand}</h2>
+            <h2 className="name">{p.name}</h2>
+          </LinkToProduct>
 
-            <LinkToProduct>
-              <h2 className="carItem__name">{p.name}</h2>
-            </LinkToProduct>
+          <h3 className="price">{calcPrice(p.prices, activeCurrency)}</h3>
 
-            {/* Price */}
-            <h3 className="carItem__price">{calcPrice(p.prices, activeCurrency)}</h3>
+          <ProductAttributes attributes={p.attributes} />
+        </Left>
 
-            {/* Attributes */}
-            {p.attributes?.map((a, i) => (
-              <div key={i} className="product__sizes">
-                <h4>{a.name}:</h4>
+        <Right>
+          <Counter id={p.id} qty={p.qty} />
 
-                <div className="product__sizes__btns">
-                  {a.name === "Color"
-                    ? a.items.map((x, j) => (
-                        <button
-                          key={j}
-                          value={x.value}
-                          style={{ background: x.value }}
-                          onClick={() => this.handleAttributes(a.name, x.value)}
-                          className={
-                            p.selAttributes[a.name] === x.value
-                              ? "color active-color"
-                              : "color"
-                          }
-                        />
-                      ))
-                    : a.items.map((x, j) => (
-                        <button
-                          key={j}
-                          value={x.value}
-                          onClick={() => this.handleAttributes(a.name, x.value)}
-                          className={
-                            p.selAttributes[a.name] === x.value ? "active" : ""
-                          }
-                        >
-                          {x.value}
-                        </button>
-                      ))}
-                </div>
+          <LinkToProduct className="imgWrapper">
+            <img src={p.gallery[imgIndex]} alt="Product Image" />
+
+            {p.gallery.length > 1 && (
+              <div className="gallery">
+                <IconSlideLeft onClick={this.handlePreviousImage} />
+                <IconSlideRight onClick={this.handleNextImage} />
               </div>
-            ))}
-          </div>
-
-          <div className="cartItem__right">
-            <div className="counter">
-              <div
-                className="counter__operator"
-                onClick={() => this.setState({ qty: this.state.qty + 1 })}
-              >
-                <span>+</span>
-              </div>
-
-              <div className="counter__value">{p.qty}</div>
-
-              <div
-                className="counter__operator"
-                onClick={() => this.setState({ qty: this.state.qty - 1 })}
-              >
-                <span>-</span>
-              </div>
-            </div>
-
-            <LinkToProduct className="cartItem__img">
-              <img src={p.gallery[0]} alt="Product Image" />
-            </LinkToProduct>
-          </div>
-        </div>
-      </StyledCartListProduct>
+            )}
+          </LinkToProduct>
+        </Right>
+      </Container>
     );
   }
 }

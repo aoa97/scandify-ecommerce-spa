@@ -1,5 +1,5 @@
 import { createGlobalStyle } from "styled-components";
-import { container } from "./mixins";
+import { container, flexCenter } from "./mixins";
 
 const Global = createGlobalStyle`
     html {

@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { animated, Spring } from "react-spring";
 import { IconCartW } from "../svg/IconSVG";
 import { addToCart } from "../../redux/actions/cartActions";
+import { calcPrice } from "./../../helpers/productHelpers";
+import Notification from "../Notification/Notification";
 import {
   List,
   Item,
@@ -14,16 +16,8 @@ import {
 
 class ProductList extends Component {
   handleAddToCart(e, id) {
-    e.preventDefault();
+    e.stopPropagation();
     this.props.addToCart(id);
-  }
-
-  renderPrice(prices) {
-    const { activeCurrency } = this.props;
-    const price =
-      prices.find((p) => p.currency.label === activeCurrency.label) ??
-      prices[0];
-    return `${price.currency.symbol} ${price.amount}`;
   }
 
   render() {
@@ -54,11 +48,13 @@ class ProductList extends Component {
 
                   {/*  Price */}
                   {activeCurrency && (
-                    <ItemPrice>{this.renderPrice(p.prices)}</ItemPrice>
+                    <ItemPrice>{calcPrice(p.prices, activeCurrency)}</ItemPrice>
                   )}
                 </Item>
               ))}
             </List>
+
+            {/* <Notification>Added to cart</Notification> */}
           </animated.div>
         )}
       </Spring>
