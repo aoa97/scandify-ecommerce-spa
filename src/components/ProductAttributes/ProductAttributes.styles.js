@@ -9,6 +9,15 @@ export const AttributeBtn = styled.button`
   border: 1px solid ${({ theme }) => theme.colors.black};
   transition: 0.3s all ease;
 
+  ${({ mini }) => mini && `
+      width: 2.4rem;
+      height: 2.4rem;
+      min-width: fit-content;
+      min-height: fit-content;
+      padding: 0.1rem 0.5rem;
+      font-size: 1.4rem;
+  `}
+
   &:hover {
     background: ${({ theme }) => theme.colors.black};
     color: ${({ theme }) => theme.colors.white};
@@ -21,11 +30,11 @@ export const AttributeBtn = styled.button`
   `}
 
   /* Color Attribute */
-  ${({ colorAttr, theme }) => colorAttr &&`
+  ${({ colorAttr, theme, mini }) => colorAttr &&`
     background: ${colorAttr};
     position: relative;
-    width: 3.2rem;
-    height: 3.2rem;
+    width: 3.2rem ${mini && '1.6rem'};
+    height: 3.2rem ${mini && '1.6rem'};
 
     &:hover{
       background: ${colorAttr};
@@ -45,7 +54,10 @@ export const AttributeBtn = styled.button`
   `}
 
   /* Active Color Attribute Case */
-  ${({ colorAttr, active, theme }) => colorAttr && active &&`
+  ${({ colorAttr, active, theme }) =>
+    colorAttr &&
+    active &&
+    `
     &::after {
       content: "";
       position: absolute;
@@ -73,6 +85,13 @@ export const AttributeItem = styled.div`
     font-weight: 700;
     text-transform: uppercase;
     margin-bottom: 0.8rem;
+
+    
+  ${({ mini }) => mini && `
+    font-size: 1.4rem;
+    font-weight: 400;
+    text-transform: normal;
+  `}
   }
 `;
 

@@ -2,6 +2,7 @@ import { Component } from "react";
 import { connect } from "react-redux";
 import { Counter } from "./Counter.styles";
 import { updateQty } from "../../redux/actions/cartActions";
+import { IconMinus } from "../svg/IconSVG";
 
 class CartListProduct extends Component {
   state = {
@@ -19,7 +20,7 @@ class CartListProduct extends Component {
 
   render() {
     return (
-      <Counter>
+      <Counter mini={this.props.mini}>
         <div
           className="op"
           onClick={() => this.setState({ qty: this.state.qty + 1 })}
@@ -33,7 +34,7 @@ class CartListProduct extends Component {
           className="op"
           onClick={() => this.setState({ qty: this.state.qty - 1 })}
         >
-          <span>-</span>
+          <IconMinus />
         </div>
       </Counter>
     );

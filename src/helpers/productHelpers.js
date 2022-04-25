@@ -1,8 +1,8 @@
 export const calcPrice = (prices, activeCurrency, qty = "1") => {
   const { amount } =
-    prices.find((p) => p.currency.label === activeCurrency?.label) ?? prices[0];
+    prices.find((p) => p.currency?.label === activeCurrency?.label) ?? prices[0];
 
-  return `${activeCurrency.symbol}${(amount * qty).toFixed(2)}`;
+  return `${activeCurrency?.symbol}${(amount * qty).toFixed(2)}`;
 };
 
 export const calcTotalPrice = (cart, activeCurrency) => {

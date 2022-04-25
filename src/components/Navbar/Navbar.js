@@ -5,9 +5,10 @@ import { getCategoryData } from "../../redux/actions/categoryActions";
 import { getCurrencies } from "../../redux/actions/currenciesActions";
 import { updateQty } from "../../redux/actions/cartActions";
 import { IconCart, IconChevronDown, IconLogo } from "../svg/IconSVG";
-import CartMenu from "../CartMenu/CartMenu";
+import CartList from "../CartList/CartList";
 import CurrencyMenu from "../CurrencyMenu/CurrencyMenu";
 import StyledNavbar from "./NavbarStyled";
+import Dropdown from "../Dropdown/Dropdown";
 
 class Navbar extends Component {
   state = {
@@ -32,6 +33,9 @@ class Navbar extends Component {
   }
 
   render() {
+    const { category, cartMenu, currencyMenu } = this.state;
+    const { cart, activeCurrency } = this.props;
+
     return (
       <StyledNavbar>
         {/* Left */}
@@ -42,21 +46,21 @@ class Navbar extends Component {
           <ul>
             <li
               onClick={() => this.setState({ category: "all" })}
-              className={this.state.category === "all" ? "active" : ""}
+              className={category === "all" ? "active" : ""}
             >
               all
             </li>
 
             <li
               onClick={() => this.setState({ category: "clothes" })}
-              className={this.state.category === "clothes" ? "active" : ""}
+              className={category === "clothes" ? "active" : ""}
             >
               clothes
             </li>
 
             <li
               onClick={() => this.setState({ category: "tech" })}
-              className={this.state.category === "tech" ? "active" : ""}
+              className={category === "tech" ? "active" : ""}
             >
               tech
             </li>
@@ -75,38 +79,40 @@ class Navbar extends Component {
           <div
             className="currency-icon"
             onClick={() =>
-              this.setState({ currencyMenu: !this.state.currencyMenu })
+              this.setState({ currencyMenu: !currencyMenu, cartMenu: false })
             }
           >
-            <span>{this.props.activeCurrency?.symbol}</span>
+            <span>{activeCurrency?.symbol}</span>
             <IconChevronDown />
           </div>
 
           <div
             className="cart-icon"
-            onClick={() => this.setState({ cartMenu: !this.state.cartMenu })}
+            onClick={() =>
+              this.setState({ cartMenu: !cartMenu, currencyMenu: false })
+            }
           >
-            <div className="badge">{this.props.cart.length}</div>
+            <div className="badge">{cart.length}</div>
 
             <IconCart />
           </div>
         </div>
 
         {/* Currency Dropdown Menu */}
-        {this.state.currencyMenu && (
+        {currencyMenu && (
           <CurrencyMenu
             closeMenu={() => this.setState({ currencyMenu: false })}
           />
         )}
 
         {/* Cart Dropdown Menu */}
-        {this.state.cartMenu && (
-          <CartMenu
-            cart={this.props.cart}
-            activeCurrency={this.props.activeCurrency}
-            updateQty={this.props.updateQty}
-            closeMenu={() => this.setState({ cartMenu: false })}
-          />
+        {cartMenu && (
+          <Dropdown closeMenu={() => this.setState({ cartMenu: false })}>
+            <CartList
+              mini
+              closeMini={() => this.setState({ cartMenu: false })}
+            />
+          </Dropdown>
         )}
       </StyledNavbar>
     );
@@ -126,7 +132,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getCurrencies: () => dispatch(getCurrencies()),
     getCategoryData: (cat) => dispatch(getCategoryData(cat)),
-    updateQty: (id) => dispatch(updateQty(id)),
   };
 };
 

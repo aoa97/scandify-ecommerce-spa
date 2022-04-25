@@ -15,12 +15,12 @@ import {
 
 export default class ProductData extends Component {
   state = {
-    galleryImage: "",
+    imgIndex: 0,
   };
 
   render() {
     const { product: p, activeCurrency, addToCart } = this.props;
-    const { galleryImage } = this.state;
+    const { imgIndex } = this.state;
 
     const createDesc = (x) => {
       return { __html: x };
@@ -35,14 +35,14 @@ export default class ProductData extends Component {
                 <img
                   key={i}
                   src={img}
-                  className={galleryImage === img ? "active" : ""}
-                  onClick={() => this.setState({ galleryImage: img })}
+                  className={p.gallery[imgIndex] === img ? "active" : ""}
+                  onClick={() => this.setState({ imgIndex: i })}
                 />
               ))}
           </Gallery>
 
           <Preview>
-            <img src={galleryImage ? galleryImage : p.gallery[0]} />
+            <img src={p.gallery[imgIndex]} />
           </Preview>
         </Left>
 

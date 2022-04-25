@@ -41,8 +41,9 @@ class CartListProduct extends Component {
   };
 
   render() {
-    const { product: p, activeCurrency } = this.props;
+    const { product: p, activeCurrency, mini } = this.props;
     const { imgIndex } = this.state;
+    const price = calcPrice(p.prices, activeCurrency, p.qty);
 
     const LinkToProduct = ({ children, ...otherProps }) => (
       <Link to={`product/${p.id}`} {...otherProps}>
@@ -51,20 +52,20 @@ class CartListProduct extends Component {
     );
 
     return (
-      <Container>
-        <Left>
+      <Container mini={mini}>
+        <Left mini={mini}>
           <LinkToProduct>
             <h2 className="brand">{p.brand}</h2>
             <h2 className="name">{p.name}</h2>
           </LinkToProduct>
 
-          <h3 className="price">{calcPrice(p.prices, activeCurrency)}</h3>
+          <h3 className="price">{price}</h3>
 
-          <ProductAttributes attributes={p.attributes} />
+          <ProductAttributes mini={mini} attributes={p.attributes} />
         </Left>
 
-        <Right>
-          <Counter id={p.id} qty={p.qty} />
+        <Right mini={mini}>
+          <Counter mini={mini} id={p.id} qty={p.qty} />
 
           <LinkToProduct className="imgWrapper">
             <img src={p.gallery[imgIndex]} alt="Product Image" />

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { flexCenter } from "../../styles/mixins";
+import { flexCenter, flexSpaceBetween } from "../../styles/mixins";
 
 export const EmptyCartWrapper = styled.div`
   display: flex;
@@ -10,6 +10,10 @@ export const EmptyCartWrapper = styled.div`
   margin: 0 auto;
   row-gap: 3rem;
   transform: translateY(-1rem);
+
+  ${({ mini }) => mini &&`
+    padding-top: 3rem;
+  `}
 
   svg {
     width: 15rem;
@@ -45,41 +49,27 @@ export const CartWrapper = styled.div`
     margin-bottom: 5.5rem;
   }
 
+  // Mini Header
+  h2 {
+    font-size: 2.56rem;
+    font-weight: 700;
+    padding-bottom: 1.5rem;
+
+    span {
+      font-size: 1.6rem;
+      font-weight: 600;
+    }
+  }
+
   @media (max-width: 588px) {
     display: flex;
     flex-direction: column;
-
-    /* .cartItem {
-      min-width: 50vw;
-      align-items: stretch;
-      flex-direction: column-reverse;
-      row-gap: 2rem;
-
-      .cartItem__left {
-        .product__sizes__btns {
-          flex-wrap: wrap;
-        }
-      }
-
-      .cartItem__right {
-        flex-direction: column-reverse;
-
-        .cartItem__img {
-          width: 100%;
-          margin-bottom: 1rem;
-        }
-
-        .counter {
-          flex-direction: row;
-          justify-content: space-evenly;
-        }
-      }
-    } */
   }
 `;
 
 export const Summary = styled.div`
   div {
+    margin-top: 3.2rem;
     display: flex;
     column-gap: 1rem;
     font-size: 2.4rem;
@@ -106,5 +96,68 @@ export const Summary = styled.div`
     @media (max-width: 540px) {
       width: 100%;
     }
+  }
+`;
+
+export const List = styled.div`
+  ${({ mini }) => mini &&`
+    max-height: 55vh;
+    overflow: auto;
+  `}
+`;
+
+export const MiniSummary = styled.div`
+  ${flexSpaceBetween}
+  margin-top: 3.2rem;
+  margin-bottom: 3.5rem;
+
+  h4 {
+    font-size: 1.6rem;
+    font-weight: 500;
+  }
+
+  h5 {
+    font-size: 1.6rem;
+    font-weight: 700;
+  }
+`;
+
+export const MiniButtons = styled.div`
+  ${flexSpaceBetween}
+  .btn {
+    padding: 1.3rem 2.95rem;
+    font-size: 1.4rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    text-align: center;
+    opacity: 0.7;
+    transition: 0.5s all ease;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  @media (max-width: 374px) {
+    flex-direction: column;
+    row-gap: 1rem;
+
+    .btn {
+      width: 100%;
+    }
+  }
+
+  .bag {
+    border: 1px solid ${({ theme }) => theme.colors.black};
+
+    &:hover {
+      background: ${({ theme }) => theme.colors.black};
+      color: ${({ theme }) => theme.colors.white};
+    }
+  }
+
+  .checkout {
+    background: ${({ theme }) => theme.colors.primary};
+    color: ${({ theme }) => theme.colors.white};
   }
 `;

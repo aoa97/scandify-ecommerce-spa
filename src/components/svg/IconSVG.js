@@ -150,3 +150,20 @@ export const IconSlideRight = (props) => (
     />
   </svg>
 );
+
+export const IconMinus = (props) => (
+  <svg
+    width={10}
+    height={2}
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <path
+      d="M1 1h8"
+      stroke="#1D1F22"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+)

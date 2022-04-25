@@ -12,16 +12,21 @@ export const Right = styled.div`
     height: 288px;
     position: relative;
 
+    ${({ mini }) => mini &&`
+      width: 121px;
+      height: 100%;
+    `}
+
     .gallery {
       position: absolute;
       bottom: 1.6rem;
       right: 1.6rem;
       display: flex;
-      column-gap: .8rem;
+      column-gap: 0.8rem;
       cursor: pointer;
 
       svg:hover {
-        background: ${({theme}) => theme.colors.black};
+        background: ${({ theme }) => theme.colors.black};
       }
     }
 
@@ -29,12 +34,7 @@ export const Right = styled.div`
       width: 100%;
       height: 100%;
     }
-
-    @media (max-width: 540px) {
-      width: 100%;
-      height: auto;
-    }
-  }
+ }
 `;
 
 export const Left = styled.div`
@@ -46,16 +46,34 @@ export const Left = styled.div`
     font-size: 3rem;
     font-weight: 600;
     margin-bottom: 1.6rem;
+
+    ${({ mini }) => mini &&`
+      font-size: 1.6rem;
+      font-weight: 300;
+      margin-bottom: 0;
+    `}
   }
 
   h2.name {
     font-size: 3rem;
     font-weight: 400;
+
+    ${({ mini }) => mini &&`
+      font-size: 1.6rem;
+      font-weight: 300;
+      margin-bottom: 1rem;
+    `}
   }
 
   h3.price {
     font-size: 2.4rem;
     font-weight: 700;
+    margin-bottom: 2rem;
+
+    ${({ mini }) => mini &&`
+      font-size: 1.6rem;
+      font-weight: 500;
+    `}
   }
 `;
 
@@ -66,8 +84,22 @@ export const Container = styled.div`
   border-top: 0.1rem solid #e5e5e5;
   column-gap: 2rem;
 
+  &:last-child {
+    border-bottom: 0.1rem solid #e5e5e5;
+  }
+
   @media (max-width: 540px) {
-    flex-direction: column-reverse;
-    row-gap: 2rem;
+    ${({ mini }) => !mini &&`
+      flex-direction: column-reverse;
+      row-gap: 2rem;
+    `}
+  }
+
+  @media (max-width: 374px) {
+    ${({ mini }) => mini &&`
+      flex-direction: column-reverse;
+      row-gap: 2rem;
+      width: 80vw;
+    `}
   }
 `;

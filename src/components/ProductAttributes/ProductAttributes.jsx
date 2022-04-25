@@ -3,7 +3,7 @@ import {
   AttributeBtn,
   AttributeBtns,
   AttributeItem,
-  Container
+  Container,
 } from "./ProductAttributes.styles";
 
 export default class ProductData extends Component {
@@ -18,18 +18,19 @@ export default class ProductData extends Component {
   }
 
   render() {
-    const { attributes } = this.props;
+    const { attributes, mini } = this.props;
     const { selAttributes } = this.state;
 
     return (
       <Container>
         {attributes.map((a, i) => (
-          <AttributeItem key={i}>
+          <AttributeItem key={i} mini={mini}>
             <h4>{a.name}:</h4>
 
             <AttributeBtns>
               {a.items.map((x, j) => (
                 <AttributeBtn
+                  mini={mini}
                   key={j}
                   value={x.value}
                   active={selAttributes[a.name] === x.value}
