@@ -1,5 +1,5 @@
 import { Component } from "react";
-import StyledDropdown from "./DropdownStyled";
+import StyledDropdown from "./Dropdown.styles";
 
 export default class Dropdown extends Component {
   componentDidMount() {

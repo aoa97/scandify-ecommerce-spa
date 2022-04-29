@@ -16,7 +16,7 @@ import CartListProduct from "../CartListProduct/CartListProduct";
 
 class CartList extends Component {
   render() {
-    const { activeCurrency, cart, mini, closeMini } = this.props;
+    const { activeCurrency, cart, mini, closeMini, updateQty } = this.props;
     const { totalPrice, totalQty } = calcTotalPrice(cart, activeCurrency);
 
     return (
@@ -55,7 +55,7 @@ class CartList extends Component {
                   key={i}
                   product={p}
                   activeCurrency={activeCurrency}
-                  updateQty={this.props.updateQty}
+                  updateQty={updateQty}
                 />
               ))}
             </List>
@@ -93,11 +93,7 @@ class CartList extends Component {
         {/* Mini Cart Buttons */}
         {cart.length > 0 && mini && (
           <MiniButtons>
-            <Link
-              onClick={() => closeMini()}
-              to="/cart"
-              className="btn bag"
-            >
+            <Link onClick={() => closeMini()} to="/cart" className="btn bag">
               View Bag
             </Link>
 

@@ -15,6 +15,12 @@ export const Right = styled.div`
     ${({ mini }) => mini &&`
       width: 121px;
       height: 100%;
+
+      .preview {
+        img {
+          height: 100%;
+        }
+      }
     `}
 
     .gallery {

@@ -1,24 +1,15 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
 import { calcPrice } from "../../helpers/productHelpers";
-import { updateSelAttributes } from "../../redux/actions/cartActions";
 import { Container, Left, Right } from "./CartListProduct.styles";
 import { IconSlideLeft, IconSlideRight } from "../svg/IconSVG";
 import ProductAttributes from "../ProductAttributes/ProductAttributes";
 import Counter from "../Counter/Counter";
 
-class CartListProduct extends Component {
+export default class CartListProduct extends Component {
   state = {
-    selAttributes: this.props.product.selAttributes,
     imgIndex: 0,
   };
-
-  handleAttributes(name, value) {
-    this.setState({
-      selAttributes: { ...this.state.selAttributes, [name]: value },
-    });
-  }
 
   handlePreviousImage = (e) => {
     e.preventDefault();
@@ -45,11 +36,13 @@ class CartListProduct extends Component {
     const { imgIndex } = this.state;
     const price = calcPrice(p.prices, activeCurrency, p.qty);
 
-    const LinkToProduct = ({ children, ...otherProps }) => (
-      <Link to={`product/${p.id}`} {...otherProps}>
-        {children}
-      </Link>
-    );
+    const LinkToProduct = ({ children, ...otherProps }) => {
+      return (
+        <Link to={`product/${p.id}`} {...otherProps}>
+          {children}
+        </Link>
+      );
+    };
 
     return (
       <Container mini={mini}>
@@ -61,14 +54,16 @@ class CartListProduct extends Component {
 
           <h3 className="price">{price}</h3>
 
-          <ProductAttributes mini={mini} attributes={p.attributes} />
+          <ProductAttributes product={p} mini={mini} />
         </Left>
 
         <Right mini={mini}>
           <Counter mini={mini} id={p.id} qty={p.qty} />
 
           <LinkToProduct className="imgWrapper">
-            <img src={p.gallery[imgIndex]} alt="Product Image" />
+            <div className="preview">
+              <img src={p.gallery[imgIndex]} alt="Product Image" />
+            </div>
 
             {p.gallery.length > 1 && (
               <div className="gallery">
@@ -82,11 +77,3 @@ class CartListProduct extends Component {
     );
   }
 }
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    updateSelAttributes: (item) => dispatch(updateSelAttributes(item)),
-  };
-};
-
-export default connect(null, mapDispatchToProps)(CartListProduct);

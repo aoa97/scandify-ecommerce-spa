@@ -7,7 +7,7 @@ import { Navbar } from "./components";
 import store from "./redux/store";
 import theme from "./styles/theme";
 import Global from "./styles/Global.styled";
-import Home from "./pages/Home";
+import Category from "./pages/Category";
 import Product from "./pages/Product";
 import Cart from "./pages/Cart";
 
@@ -23,7 +23,7 @@ export default class App extends Component {
               <Switch>
                 <Route path="/product/:id" component={Product} />
                 <Route path="/cart" component={Cart} />
-                <Route path="/" component={Home} />
+                <Route path="/" component={Category} />
               </Switch>
             </main>
           </Router>

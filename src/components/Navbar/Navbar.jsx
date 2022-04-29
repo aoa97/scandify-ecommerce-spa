@@ -3,11 +3,10 @@ import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import { getCategoryData } from "../../redux/actions/categoryActions";
 import { getCurrencies } from "../../redux/actions/currenciesActions";
-import { updateQty } from "../../redux/actions/cartActions";
 import { IconCart, IconChevronDown, IconLogo } from "../svg/IconSVG";
 import CartList from "../CartList/CartList";
-import CurrencyMenu from "../CurrencyMenu/CurrencyMenu";
-import StyledNavbar from "./NavbarStyled";
+import CurrencySwitcher from "../CurrencySwitcher/CurrencySwitcher";
+import StyledNavbar from "./Navbar.styles";
 import Dropdown from "../Dropdown/Dropdown";
 
 class Navbar extends Component {
@@ -100,7 +99,7 @@ class Navbar extends Component {
 
         {/* Currency Dropdown Menu */}
         {currencyMenu && (
-          <CurrencyMenu
+          <CurrencySwitcher
             closeMenu={() => this.setState({ currencyMenu: false })}
           />
         )}

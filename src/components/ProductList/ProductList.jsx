@@ -4,7 +4,6 @@ import { animated, Spring } from "react-spring";
 import { IconCartW } from "../svg/IconSVG";
 import { addToCart } from "../../redux/actions/cartActions";
 import { calcPrice } from "./../../helpers/productHelpers";
-import Notification from "../Notification/Notification";
 import {
   List,
   Item,
@@ -35,7 +34,7 @@ class ProductList extends Component {
                   onClick={() => nav(`/product/${p.id}`)}
                 >
                   <ItemImg>
-                    <img src={p.gallery[0]} />
+                    <img src={p.gallery[0]} alt="Product Img" />
 
                     {/* Cart Icon (Only on hover) => Placed here to be relative to img */}
                     <ItemCart onClick={(e) => this.handleAddToCart(e, p.id)}>
@@ -53,8 +52,6 @@ class ProductList extends Component {
                 </Item>
               ))}
             </List>
-
-            {/* <Notification>Added to cart</Notification> */}
           </animated.div>
         )}
       </Spring>

@@ -1,10 +1,11 @@
 import { createGlobalStyle } from "styled-components";
-import { container, flexCenter } from "./mixins";
+import { container } from "./mixins";
 
 const Global = createGlobalStyle`
     html {
         font-size: 10px;
         scroll-behavior: smooth;
+        user-select: none;
     }
 
     body {

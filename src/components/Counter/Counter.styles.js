@@ -7,6 +7,18 @@ export const Counter = styled.div`
   justify-content: space-between;
   align-items: center;
 
+  &.row {
+    flex-direction: row-reverse;
+    align-self: flex-end;
+    column-gap: 2rem;
+
+    .op {
+      width: 3.5rem;
+      height: 3.5rem;
+      font-size: 2.4rem;
+    }
+  }
+
   .op {
     cursor: pointer;
     ${flexCenter}
@@ -28,6 +40,10 @@ export const Counter = styled.div`
     &:hover {
       background: ${({ theme }) => theme.colors.black};
       color: ${({ theme }) => theme.colors.white};
+
+      path {
+        stroke: ${({ theme }) => theme.colors.white};
+      }
     }
   }
 

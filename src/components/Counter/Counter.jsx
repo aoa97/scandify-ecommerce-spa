@@ -6,34 +6,44 @@ import { IconMinus } from "../svg/IconSVG";
 
 class CartListProduct extends Component {
   state = {
-    qty: this.props.qty,
+    qty: this.props.qty || 1,
+  };
+
+  handleIncrement = () => {
+    this.setState({ qty: this.state.qty + 1 });
+  };
+
+  handleDecrement = () => {
+    const { qty } = this.state;
+    if (!this.props.qty && qty !== 1) {
+      this.setState({ qty: this.state.qty - 1 });
+    } else if (this.props.qty) { // Able to remove
+      this.setState({ qty: this.state.qty - 1 });
+    }
   };
 
   componentDidUpdate(prevProp, prevState) {
-    if (prevState.qty !== this.state.qty) {
-      this.props.updateQty({
-        id: this.props.id,
-        qty: this.state.qty,
-      });
+    const { id, getQty, updateQty } = this.props;
+    const { qty } = this.state;
+
+    if (prevState.qty !== qty) {
+      if (getQty) getQty(qty); // Parent CB
+      if (this.props.qty) updateQty({ id, qty });
     }
   }
 
   render() {
+    const { qty } = this.props;
+
     return (
-      <Counter mini={this.props.mini}>
-        <div
-          className="op"
-          onClick={() => this.setState({ qty: this.state.qty + 1 })}
-        >
+      <Counter {...this.props}>
+        <div className="op" onClick={this.handleIncrement}>
           <span>+</span>
         </div>
 
-        <div className="val">{this.props.qty}</div>
+        <div className="val">{qty ? qty : this.state.qty}</div>
 
-        <div
-          className="op"
-          onClick={() => this.setState({ qty: this.state.qty - 1 })}
-        >
+        <div className="op" onClick={this.handleDecrement}>
           <IconMinus />
         </div>
       </Counter>

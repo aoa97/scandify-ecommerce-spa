@@ -51,6 +51,10 @@ export const Right = styled.div`
   padding-right: 5.2rem;
   padding-left: 10rem;
 
+  .price-counter {
+    ${flexSpaceBetween}
+  }
+
   @media (max-width: 813px) {
     padding: 0;
   }
@@ -58,13 +62,31 @@ export const Right = styled.div`
 
 // Left
 export const Preview = styled.div`
+  position: relative;
   align-self: flex-start;
   width: 100%;
   ${flexCenter}
 
   img {
-    max-width: 100%;
+    width: 100%;
     height: 100%;
+  }
+
+  .slider {
+    display: none;
+    position: absolute;
+    bottom: 1.6rem;
+    right: 1.6rem;
+    column-gap: 0.8rem;
+    cursor: pointer;
+
+    @media (max-width: 1095px) {
+      display: flex;
+    }
+
+    svg:hover {
+      background: ${({ theme }) => theme.colors.black};
+    }
   }
 `;
 
@@ -90,14 +112,8 @@ export const Gallery = styled.div`
     }
   }
 
-  @media (max-width: 946px) {
-    order: 2;
-    flex-direction: row;
-    align-items: center;
-    column-gap: 1rem;
-    max-width: 100%;
-    overflow: auto;
-    margin-top: 2rem;
+  @media (max-width: 1095px) {
+    display: none;
   }
 `;
 
@@ -106,10 +122,6 @@ export const Left = styled.div`
   ${flexSpaceBetween}
   align-self: flex-start;
   column-gap: 4.379rem;
-
-  @media (max-width: 946px) {
-    flex-direction: column;
-  }
 
   @media (max-width: 813px) {
     width: 100%;

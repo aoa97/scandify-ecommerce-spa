@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const StyledCurrencyMenu = styled.div`
+const StyledCurrencySwitcher = styled.div`
   .currency__item {
     margin-bottom: 2.1rem;
   }
@@ -28,4 +28,4 @@ const StyledCurrencyMenu = styled.div`
   }
 `;
 
-export default StyledCurrencyMenu;
+export default StyledCurrencySwitcher;

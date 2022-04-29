@@ -1,6 +1,7 @@
 export const calcPrice = (prices, activeCurrency, qty = "1") => {
   const { amount } =
-    prices.find((p) => p.currency?.label === activeCurrency?.label) ?? prices[0];
+    prices.find((p) => p.currency?.label === activeCurrency?.label) ??
+    prices[0];
 
   return `${activeCurrency?.symbol}${(amount * qty).toFixed(2)}`;
 };
@@ -16,6 +17,6 @@ export const calcTotalPrice = (cart, activeCurrency) => {
 
   return {
     totalQty,
-    totalPrice: `${activeCurrency?.symbol}${totalPrice.toFixed(2)}`,
+    totalPrice: `${activeCurrency?.symbol}${(15 + totalPrice).toFixed(2)}`, // Tax $15 Included
   };
 };

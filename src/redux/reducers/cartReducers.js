@@ -17,18 +17,21 @@ export const cartReducer = (state = [{ selAttributes: {} }], action) => {
   switch (action.type) {
     /* Add item to product */
     case CART_ADD_ITEM:
-      const product = { qty: 1, ...action.payload };
+      const product = action.payload;
+
       // Check if prodct exists
       const exist = cart.find((p) => p.id === action.payload.id);
 
       if (exist) {
-        return state;
+        const fill = cart.filter((p) => p.id !== exist.id);
+        const newCart = [...fill, product];
+        localStorage.setItem("cart", JSON.stringify(newCart));
+        return newCart;
       }
 
       // If not exist, append it to cart
       const newCart = [...cart, product].sort(cartCompare);
       localStorage.setItem("cart", JSON.stringify(newCart));
-
       return newCart;
 
     /* Update product Qunatity */
@@ -56,11 +59,13 @@ export const cartReducer = (state = [{ selAttributes: {} }], action) => {
 
       // Update
       const item2 = cart.find((p) => p.id === id2);
-      item2.selAttributes = selAttributes;
-      const filteredCart2 = cart.filter((p) => p.id !== id2);
-      const updatedCart2 = [...filteredCart2, item2].sort(cartCompare);
-      localStorage.setItem("cart", JSON.stringify(updatedCart2));
-      return updatedCart2;
+      if (item2) {
+        item2.selAttributes = selAttributes;
+        const filteredCart2 = cart.filter((p) => p.id !== id2);
+        const updatedCart2 = [...filteredCart2, item2].sort(cartCompare);
+        localStorage.setItem("cart", JSON.stringify(updatedCart2));
+        return updatedCart2;
+      }
     default:
       return state;
   }

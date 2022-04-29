@@ -11,6 +11,6 @@ export const flexSpaceBetween = () => `
 `;
 
 export const container = () => `
-    margin: 0 auto;
+    margin-inline: auto;
     padding: 0 5vw;
 `;

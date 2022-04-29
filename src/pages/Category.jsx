@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet";
 import { connect } from "react-redux";
 import { Loader, ProductList } from "../components";
 
-class HomePage extends Component {
+class CategoryPage extends Component {
   render() {
     const { history, category, loading } = this.props;
 
@@ -17,22 +17,23 @@ class HomePage extends Component {
         {loading && <Loader />}
 
         {!loading && (
-          <HomePageStyled>
-            <h1>{category.name.toUpperCase()}</h1>
+          <CategoryPageStyled>
+            <h1>{category.name}</h1>
             <ProductList nav={history.push} products={category.products} />
-          </HomePageStyled>
+          </CategoryPageStyled>
         )}
       </>
     );
   }
 }
 
-const HomePageStyled = styled.div`
+const CategoryPageStyled = styled.div`
   padding: 8rem 0;
 
   h1 {
     font-size: 4.2rem;
     font-weight: 400;
+    text-transform: uppercase;
   }
 `;
 
@@ -44,4 +45,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(HomePage);
+export default connect(mapStateToProps)(CategoryPage);

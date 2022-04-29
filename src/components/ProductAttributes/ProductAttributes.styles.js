@@ -30,14 +30,14 @@ export const AttributeBtn = styled.button`
   `}
 
   /* Color Attribute */
-  ${({ colorAttr, theme, mini }) => colorAttr &&`
-    background: ${colorAttr};
+  ${({ swatch, theme, mini }) => swatch &&`
+    background: ${swatch};
     position: relative;
-    width: 3.2rem ${mini && '1.6rem'};
-    height: 3.2rem ${mini && '1.6rem'};
+    width: ${mini ? '1.6rem' : '3.2rem'};
+    height: ${mini ? '1.6rem' : '3.2rem'};
 
     &:hover{
-      background: ${colorAttr};
+      background: ${swatch};
     }
 
     &:hover::after{
@@ -54,8 +54,8 @@ export const AttributeBtn = styled.button`
   `}
 
   /* Active Color Attribute Case */
-  ${({ colorAttr, active, theme }) =>
-    colorAttr &&
+  ${({ swatch, active, theme }) =>
+    swatch &&
     active &&
     `
     &::after {

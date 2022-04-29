@@ -2,15 +2,15 @@ import { Component } from "react";
 import { connect } from "react-redux";
 import { setActiveCurrency } from "../../redux/actions/currenciesActions";
 import Dropdown from "../Dropdown/Dropdown";
-import StyledCurrencyMenu from "./CurrencyMenuStyled";
+import StyledCurrencySwitcher from "./CurrencySwitcher.styles";
 
-class CurrencyMenu extends Component {
+class CurrencySwitcher extends Component {
   render() {
     const { currencies, activeCurrency, setActiveCurrency } = this.props;
 
     return (
       <Dropdown closeMenu={this.props.closeMenu}>
-        <StyledCurrencyMenu>
+        <StyledCurrencySwitcher>
           {currencies.map((c, i) => (
             <div
               key={i}
@@ -25,7 +25,7 @@ class CurrencyMenu extends Component {
               <span>{c.label}</span>
             </div>
           ))}
-        </StyledCurrencyMenu>
+        </StyledCurrencySwitcher>
       </Dropdown>
     );
   }
@@ -44,4 +44,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CurrencyMenu);
+export default connect(mapStateToProps, mapDispatchToProps)(CurrencySwitcher);
