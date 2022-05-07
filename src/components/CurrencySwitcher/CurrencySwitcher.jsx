@@ -5,11 +5,17 @@ import Dropdown from "../Dropdown/Dropdown";
 import StyledCurrencySwitcher from "./CurrencySwitcher.styles";
 
 class CurrencySwitcher extends Component {
+  handleCurrencySelect(c) {
+    const { setActiveCurrency, closeMenu } = this.props;
+    setActiveCurrency(c);
+    closeMenu();
+  }
+
   render() {
-    const { currencies, activeCurrency, setActiveCurrency } = this.props;
+    const { currencies, activeCurrency, closeMenu} = this.props;
 
     return (
-      <Dropdown closeMenu={this.props.closeMenu}>
+      <Dropdown closeMenu={closeMenu}>
         <StyledCurrencySwitcher>
           {currencies.map((c, i) => (
             <div
@@ -19,7 +25,7 @@ class CurrencySwitcher extends Component {
                   ? "currency__item active"
                   : "currency__item"
               }`}
-              onClick={() => setActiveCurrency(c)}
+              onClick={() => this.handleCurrencySelect(c)}
             >
               <span>{c.symbol}</span>
               <span>{c.label}</span>

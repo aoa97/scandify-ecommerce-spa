@@ -14,4 +14,9 @@ export const BtnPrimary = styled.button`
   &:hover {
     opacity: 1;
   }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
 `;

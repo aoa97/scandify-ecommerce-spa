@@ -34,7 +34,7 @@ export default class CartListProduct extends Component {
   render() {
     const { product: p, activeCurrency, mini } = this.props;
     const { imgIndex } = this.state;
-    const price = calcPrice(p.prices, activeCurrency, p.qty);
+    const price = calcPrice(p.prices, activeCurrency);
 
     const LinkToProduct = ({ children, ...otherProps }) => {
       return (

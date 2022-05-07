@@ -48,6 +48,12 @@ export const ItemName = styled.span`
   line-height: 2.88rem;
 `;
 
+export const ItemBrand = styled.span`
+  font-size: 1.8rem;
+  font-weight: 500;
+  line-height: 2.88rem;
+`;
+
 export const ItemPrice = styled.span`
   font-size: 1.8rem;
   font-weight: 500;
@@ -70,7 +76,6 @@ export const Item = styled.div`
   }
 
   ${({ noStock }) => noStock && `
-      pointer-events: none;
       opacity: 0.5;
 
       ${ItemImg}::before {

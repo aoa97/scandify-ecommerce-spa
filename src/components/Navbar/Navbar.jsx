@@ -8,6 +8,7 @@ import CartList from "../CartList/CartList";
 import CurrencySwitcher from "../CurrencySwitcher/CurrencySwitcher";
 import StyledNavbar from "./Navbar.styles";
 import Dropdown from "../Dropdown/Dropdown";
+import { calcTotalQty } from '../../helpers/productHelpers';
 
 class Navbar extends Component {
   state = {
@@ -34,6 +35,7 @@ class Navbar extends Component {
   render() {
     const { category, cartMenu, currencyMenu } = this.state;
     const { cart, activeCurrency } = this.props;
+    const totalQty = calcTotalQty(cart)
 
     return (
       <StyledNavbar>
@@ -91,7 +93,7 @@ class Navbar extends Component {
               this.setState({ cartMenu: !cartMenu, currencyMenu: false })
             }
           >
-            <div className="badge">{cart.length}</div>
+            <div className="badge">{totalQty}</div>
 
             <IconCart />
           </div>

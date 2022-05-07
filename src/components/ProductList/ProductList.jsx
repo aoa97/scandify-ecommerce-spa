@@ -9,6 +9,7 @@ import {
   Item,
   ItemImg,
   ItemName,
+  ItemBrand,
   ItemCart,
   ItemPrice,
 } from "./ProductList.styles";
@@ -42,6 +43,9 @@ class ProductList extends Component {
                     </ItemCart>
                   </ItemImg>
 
+                  {/*  Name */}
+                  <ItemBrand>{p.brand}</ItemBrand>
+                  
                   {/*  Name */}
                   <ItemName>{p.name}</ItemName>
 

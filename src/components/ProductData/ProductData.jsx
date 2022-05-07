@@ -1,3 +1,4 @@
+import parse from 'html-react-parser';
 import { Component } from "react";
 import { calcPrice } from "../../helpers/productHelpers";
 import { BtnPrimary } from "../../styles/Components.styled";
@@ -45,11 +46,7 @@ export default class ProductData extends Component {
   render() {
     const { product: p, activeCurrency, addToCart } = this.props;
     const { imgIndex, qty, selAttributes } = this.state;
-    const price = calcPrice(p.prices, activeCurrency, qty);
-
-    const createDesc = (x) => {
-      return { __html: x };
-    };
+    const price = calcPrice(p.prices, activeCurrency);
 
     return (
       <Container>
@@ -105,11 +102,14 @@ export default class ProductData extends Component {
             />
           </div>
 
-          <BtnPrimary onClick={() => addToCart(p.id, selAttributes, qty)}>
+          <BtnPrimary
+            onClick={() => addToCart(p.id, selAttributes, qty)}
+            disabled={Object.keys(selAttributes).length !== p.attributes.length} // All attrs should be selected
+          >
             Add to Cart
           </BtnPrimary>
 
-          <Description dangerouslySetInnerHTML={createDesc(p.description)} />
+          <Description>{p.description && parse(p.description)}</Description>
         </Right>
       </Container>
     );

@@ -7,7 +7,7 @@ export const AttributeBtn = styled.button`
   font-weight: 400;
   font-family: "Source Sans Pro", sans-serif;
   border: 1px solid ${({ theme }) => theme.colors.black};
-  transition: 0.3s all ease;
+  transition: 0.3s background-color ease;
 
   ${({ mini }) => mini && `
       width: 2.4rem;
@@ -32,43 +32,21 @@ export const AttributeBtn = styled.button`
   /* Color Attribute */
   ${({ swatch, theme, mini }) => swatch &&`
     background: ${swatch};
+    border-color: #EEE;
     position: relative;
     width: ${mini ? '1.6rem' : '3.2rem'};
     height: ${mini ? '1.6rem' : '3.2rem'};
+    outline-offset: .1rem;
 
     &:hover{
       background: ${swatch};
-    }
-
-    &:hover::after{
-      content: "";
-      position: absolute;
-      width: 100%;
-      height: 5px;
-      right: 0;
-      bottom: -10px;
-      border-bottom-left-radius: 10px;
-      border-bottom-right-radius: 10px;
-      background: ${theme.colors.black};
+      outline: 1px solid ${theme.colors.primary};
     }
   `}
 
   /* Active Color Attribute Case */
-  ${({ swatch, active, theme }) =>
-    swatch &&
-    active &&
-    `
-    &::after {
-      content: "";
-      position: absolute;
-      width: 100%;
-      height: 5px;
-      right: 0;
-      bottom: -10px;
-      border-bottom-left-radius: 10px;
-      border-bottom-right-radius: 10px;
-      background: ${theme.colors.black};
-    }
+  ${({ swatch, active, theme }) => swatch && active &&`
+     outline: 1px solid ${theme.colors.primary};
   `}
 `;
 
