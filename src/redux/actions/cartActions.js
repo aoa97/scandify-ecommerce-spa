@@ -4,12 +4,9 @@ import {
   CART_UPDATE_SELATTRIBUTES,
 } from "../contstants/cartConstants";
 
-export const addToCart = (id, selAttributes, qty = 1) => (dispatch, getState) => {
-  const item = getState().categoryData.category.products.find(
-    (p) => p.id === id
-  );
-
-  dispatch({ type: CART_ADD_ITEM, payload: { ...item, qty, selAttributes } });
+export const addToCart = (product, selAttributes, qty = 1) => (dispatch, getState) => {
+  const cartId = Date.now(); // UID for cart items to avoid overwriting
+  dispatch({ type: CART_ADD_ITEM, payload: { ...product, cartId, qty, selAttributes } });
 };
 
 export const updateQty = (item) => (dispatch, getState) => {

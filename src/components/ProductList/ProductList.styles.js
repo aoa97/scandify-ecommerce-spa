@@ -9,7 +9,10 @@ export const ItemImg = styled.div`
 
   img {
     max-width: 100%;
-    height: 100%;
+    max-height: 100%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    object-position: center top;
   }
 
   @media (max-width: 678px) {

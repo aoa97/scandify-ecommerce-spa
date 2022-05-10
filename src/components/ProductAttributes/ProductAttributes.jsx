@@ -27,14 +27,14 @@ class ProductAttributes extends Component {
       if (getAttributes) getAttributes(selAttributes); // Return the results back to Parent [ICO ProductPage]
 
       updateSelAttributes({
-        id2: product.id,
+        _cartId: product.cartId,
         selAttributes: selAttributes,
       });
     }
   }
 
   render() {
-    const { product: p, mini } = this.props;
+    const { product: p, mini, noStock } = this.props;
     const { selAttributes } = this.state;
 
     return (
@@ -50,6 +50,7 @@ class ProductAttributes extends Component {
                   key={j}
                   value={x.value}
                   active={selAttributes?.[a.name] === x?.value}
+                  noStock={noStock}
                   swatch={a.type === "swatch" && x?.value}
                   onClick={() => this.handleAttributes(a?.name, x?.value)}
                 >

@@ -3,10 +3,23 @@ import { Component } from "react";
 import { Helmet } from "react-helmet";
 import { connect } from "react-redux";
 import { Loader, ProductList } from "../components";
+import { getCategoryProducts } from "../redux/actions/categoryActions";
 
 class CategoryPage extends Component {
+  componentDidMount() {
+    this.props.getCategoryProducts();
+  }
+
+  componentDidUpdate(prevProps) {
+    const { category, getCategoryProducts } = this.props;
+
+    if (prevProps.category !== category) {
+      getCategoryProducts();
+    }
+  }
+
   render() {
-    const { history, category, loading } = this.props;
+    const { history, category, products, loading } = this.props;
 
     return (
       <>
@@ -18,8 +31,8 @@ class CategoryPage extends Component {
 
         {!loading && (
           <CategoryPageStyled>
-            <h1>{category.name}</h1>
-            <ProductList nav={history.push} products={category.products} />
+            <h1>{category}</h1>
+            <ProductList nav={history.push} products={products} />
           </CategoryPageStyled>
         )}
       </>
@@ -39,10 +52,17 @@ const CategoryPageStyled = styled.div`
 
 const mapStateToProps = (state) => {
   return {
-    category: state.categoryData.category,
-    loading: state.categoryData.loading,
-    error: state.categoryData.error,
+    category: state.categoryActive,
+    products: state.categoryProducts.products,
+    loading: state.categoryProducts.loading,
+    error: state.categoryProducts.error,
   };
 };
 
-export default connect(mapStateToProps)(CategoryPage);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getCategoryProducts: () => dispatch(getCategoryProducts()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CategoryPage);

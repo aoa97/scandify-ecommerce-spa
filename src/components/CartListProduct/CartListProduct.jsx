@@ -58,7 +58,7 @@ export default class CartListProduct extends Component {
         </Left>
 
         <Right mini={mini}>
-          <Counter mini={mini} id={p.id} qty={p.qty} />
+          <Counter mini={mini} cartId={p.cartId} qty={p.qty} />
 
           <LinkToProduct className="imgWrapper">
             <div className="preview">

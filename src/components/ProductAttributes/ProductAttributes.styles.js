@@ -18,6 +18,10 @@ export const AttributeBtn = styled.button`
       font-size: 1.4rem;
   `}
 
+  ${({ noStock }) => noStock && `
+    pointer-events: none;
+  `}
+
   &:hover {
     background: ${({ theme }) => theme.colors.black};
     color: ${({ theme }) => theme.colors.white};

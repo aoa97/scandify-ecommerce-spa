@@ -66,10 +66,12 @@ export const Preview = styled.div`
   align-self: flex-start;
   width: 100%;
   ${flexCenter}
-
+  
   img {
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    object-position: center top;
     width: 100%;
-    height: 100%;
   }
 
   .slider {
@@ -98,18 +100,10 @@ export const Gallery = styled.div`
 
   img {
     width: 8rem;
-    height: 8rem;
-    opacity: 0.7;
-    transition: 0.3s opacity ease;
-
-    &:hover {
-      cursor: pointer;
-      opacity: 1;
-    }
-
-    &.active {
-      opacity: 1;
-    }
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    object-position: center top;
+    cursor: pointer;
   }
 
   @media (max-width: 1095px) {
@@ -118,7 +112,7 @@ export const Gallery = styled.div`
 `;
 
 export const Left = styled.div`
-  flex: 1;
+  flex: 2;
   ${flexSpaceBetween}
   align-self: flex-start;
   column-gap: 4.379rem;

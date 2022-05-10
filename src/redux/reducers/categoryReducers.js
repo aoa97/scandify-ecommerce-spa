@@ -1,27 +1,34 @@
 import {
-  CATEGORY_DATA_REQUEST,
-  CATEGORY_DATA_RESPONSE,
-  CATEGORY_DATA_FAIL,
+  CATEGORY_ACTIVE_UPDATE,
+  CATEGORY_PRODUCTS_REQUEST,
+  CATEGORY_PRODUCTS_RESPONSE,
+  CATEGORY_PRODUCTS_FAIL,
   CATEGORY_PRODUCT_REQUEST,
   CATEGORY_PRODUCT_RESPONSE,
   CATEGORY_PRODUCT_FAIL,
 } from "../contstants/categoryContstnts";
 
-export const categoryDataReducer = (
+export const categoryActiveReducer = (state = "all", action) => {
+  switch (action.type) {
+    case CATEGORY_ACTIVE_UPDATE:
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
+export const categoryProductsReducer = (
   state = {
-    category: {
-      name: "",
-      products: [{ gallery: [], prices: [{ currency: {} }] }],
-    },
+    products: [{ gallery: [], prices: [{ currency: {} }] }],
   },
   action
 ) => {
   switch (action.type) {
-    case CATEGORY_DATA_REQUEST:
+    case CATEGORY_PRODUCTS_REQUEST:
       return { loading: true, ...state };
-    case CATEGORY_DATA_RESPONSE:
-      return { loading: false, category: action.payload.category };
-    case CATEGORY_DATA_FAIL:
+    case CATEGORY_PRODUCTS_RESPONSE:
+      return { loading: false, products: action.payload };
+    case CATEGORY_PRODUCTS_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;
@@ -49,6 +56,3 @@ export const categoryProductReducer = (
       return state;
   }
 };
-
-
-

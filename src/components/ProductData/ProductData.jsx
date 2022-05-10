@@ -1,4 +1,4 @@
-import parse from 'html-react-parser';
+import parse from "html-react-parser";
 import { Component } from "react";
 import { calcPrice } from "../../helpers/productHelpers";
 import { BtnPrimary } from "../../styles/Components.styled";
@@ -57,15 +57,14 @@ export default class ProductData extends Component {
                 <img
                   key={i}
                   src={img}
-                  alt="Product Image"
-                  className={p.gallery[imgIndex] === img ? "active" : ""}
+                  alt="Product"
                   onClick={() => this.setState({ imgIndex: i })}
                 />
               ))}
           </Gallery>
 
           <Preview>
-            <img src={p.gallery[imgIndex]} alt="Product Image" />
+            <img src={p.gallery[imgIndex]} alt="Product" />
 
             {/* Slider In Smaller Screens */}
             {p.gallery.length > 1 && (
@@ -84,6 +83,7 @@ export default class ProductData extends Component {
           </Title>
 
           <ProductAttributes
+            noStock={!p.inStock}
             product={p}
             getAttributes={(selAttributes) => this.setState({ selAttributes })} // CB to get attrs back from child
           />
@@ -95,18 +95,20 @@ export default class ProductData extends Component {
               {activeCurrency && <span>{price}</span>}
             </Price>
 
-            <Counter
-              id={p.id}
-              className="row"
-              getQty={(qty) => this.setState({ qty })} // CB to get qty back from child
-            />
+            {p.inStock && (
+              <Counter
+                className="row"
+                cartId={p.cartId}
+                getQty={(qty) => this.setState({ qty })} // CB to get qty back from child
+              />
+            )}
           </div>
 
           <BtnPrimary
-            onClick={() => addToCart(p.id, selAttributes, qty)}
+            onClick={() => addToCart(p, selAttributes, qty)}
             disabled={Object.keys(selAttributes).length !== p.attributes.length} // All attrs should be selected
           >
-            Add to Cart
+            {p.inStock ? "Add to Cart" : "Out of Stock"}
           </BtnPrimary>
 
           <Description>{p.description && parse(p.description)}</Description>

@@ -15,9 +15,9 @@ import {
 } from "./ProductList.styles";
 
 class ProductList extends Component {
-  handleAddToCart(e, id) {
+  handleAddToCart(e, p) {
     e.stopPropagation();
-    this.props.addToCart(id);
+    this.props.addToCart(p);
   }
 
   render() {
@@ -29,23 +29,21 @@ class ProductList extends Component {
           <animated.div style={styles}>
             <List>
               {products.map((p, i) => (
-                <Item
-                  key={i}
-                  noStock={!p.inStock}
-                  onClick={() => nav(`/product/${p.id}`)}
-                >
+                <Item key={i} noStock={!p.inStock} onClick={() => nav(`/product/${p.id}`)}>
                   <ItemImg>
                     <img src={p.gallery[0]} alt="Product Img" />
 
                     {/* Cart Icon (Only on hover) => Placed here to be relative to img */}
-                    <ItemCart onClick={(e) => this.handleAddToCart(e, p.id)}>
-                      <IconCartW />
-                    </ItemCart>
+                    {p.inStock && (
+                      <ItemCart onClick={(e) => this.handleAddToCart(e, p)}>
+                        <IconCartW />
+                      </ItemCart>
+                    )}
                   </ItemImg>
 
                   {/*  Name */}
                   <ItemBrand>{p.brand}</ItemBrand>
-                  
+
                   {/*  Name */}
                   <ItemName>{p.name}</ItemName>
 
@@ -71,7 +69,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addToCart: (id) => dispatch(addToCart(id)),
+    addToCart: (p) => dispatch(addToCart(p)),
   };
 };
 

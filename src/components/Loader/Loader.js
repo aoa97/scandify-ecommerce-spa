@@ -4,16 +4,6 @@ import loader from "./loader.json";
 import styled from "styled-components";
 
 export default class Loader extends Component {
-  componentDidMount() {
-    document.querySelector("nav").style.display = "none";
-    document.body.style.overflow = "hidden";
-  }
-
-  componentWillUnmount() {
-    document.querySelector("nav").style.display = "flex";
-    document.body.style.overflow = "auto";
-  }
-
   render() {
     return (
       <StyledLoader>
@@ -29,10 +19,17 @@ export default class Loader extends Component {
 }
 
 const StyledLoader = styled.div`
-  height: 100vh;
+  height: 100%;
+  width: 100%;
+  background: #FFF;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2000;
+  overflow: hidden;
 
   .loader {
     width: 200px;

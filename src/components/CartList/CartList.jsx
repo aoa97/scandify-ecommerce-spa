@@ -72,17 +72,11 @@ class CartList extends Component {
               </MiniSummary>
             ) : (
               <Summary>
-                <div>
-                  Tax: <span>$15.00</span>
-                </div>
+                <div>Tax: <span>$15.00</span></div>
 
-                <div>
-                  Qty: <span>{totalQty}</span>
-                </div>
+                <div>Qty: <span>{totalQty}</span></div>
 
-                <div className="total">
-                  Total: <span>{totalPrice}</span>
-                </div>
+                <div className="total">Total: <span>{totalPrice}</span></div>
 
                 <BtnPrimary>Order</BtnPrimary>
               </Summary>

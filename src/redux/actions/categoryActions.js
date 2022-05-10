@@ -1,7 +1,8 @@
 import {
-  CATEGORY_DATA_REQUEST,
-  CATEGORY_DATA_RESPONSE,
-  CATEGORY_DATA_FAIL,
+  CATEGORY_ACTIVE_UPDATE,
+  CATEGORY_PRODUCTS_REQUEST,
+  CATEGORY_PRODUCTS_RESPONSE,
+  CATEGORY_PRODUCTS_FAIL,
   CATEGORY_PRODUCT_REQUEST,
   CATEGORY_PRODUCT_RESPONSE,
   CATEGORY_PRODUCT_FAIL,
@@ -9,18 +10,17 @@ import {
 
 const url = "http://localhost:4000";
 
-export const getCategoryData = (cat) => (dispatch, getState) => {
-  dispatch({ type: CATEGORY_DATA_REQUEST });
+export const setActiveCategory = (category) => (dispatch, getState) => {
+  dispatch({ type: CATEGORY_ACTIVE_UPDATE, payload: category });
+};
+
+export const getCategoryProducts = () => (dispatch, getState) => {
+  dispatch({ type: CATEGORY_PRODUCTS_REQUEST });
 
   // GQL Query
   const query = `
   {
-    currencies {
-      label,
-      symbol
-    },
-    category(input: { title: "${cat}"}) {
-      name,
+    category(input: { title: "${getState().categoryActive}"}) {
       products {
         id,
         name,
@@ -45,14 +45,11 @@ export const getCategoryData = (cat) => (dispatch, getState) => {
     .then((res) => res.json())
     .then((res) =>
       dispatch({
-        type: CATEGORY_DATA_RESPONSE,
-        payload: {
-          category: res.data.category,
-          currencies: res.data.currencies,
-        },
+        type: CATEGORY_PRODUCTS_RESPONSE,
+        payload: res.data.category.products,
       })
     )
-    .catch((e) => dispatch({ type: CATEGORY_DATA_FAIL, payload: e }));
+    .catch((e) => dispatch({ type: CATEGORY_PRODUCTS_FAIL, payload: e }));
 };
 
 export const getProductById = (id) => (dispatch, getState) => {

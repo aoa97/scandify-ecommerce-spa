@@ -23,12 +23,12 @@ class CartListProduct extends Component {
   };
 
   componentDidUpdate(prevProp, prevState) {
-    const { id, getQty, updateQty } = this.props;
+    const { cartId, getQty, updateQty } = this.props;
     const { qty } = this.state;
 
     if (prevState.qty !== qty) {
       if (getQty) getQty(qty); // Parent CB
-      if (this.props.qty) updateQty({ id, qty });
+      if (this.props.qty) updateQty({ cartId, qty });
     }
   }
 
