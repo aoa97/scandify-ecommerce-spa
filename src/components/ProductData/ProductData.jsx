@@ -99,7 +99,8 @@ export default class ProductData extends Component {
               <Counter
                 className="row"
                 cartId={p.cartId}
-                getQty={(qty) => this.setState({ qty })} // CB to get qty back from child
+                qty={qty}
+                setQty={(qty) => this.setState({ qty })}
               />
             )}
           </div>

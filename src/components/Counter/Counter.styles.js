@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { flexCenter } from "../../styles/mixins";
 
-export const Counter = styled.div`
+export const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;

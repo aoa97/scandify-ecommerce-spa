@@ -24,12 +24,11 @@ class ProductAttributes extends Component {
     const { selAttributes } = this.state;
 
     if (prevState.selAttributes !== selAttributes) {
-      if (getAttributes) getAttributes(selAttributes); // Return the results back to Parent [ICO ProductPage]
-
-      updateSelAttributes({
-        _cartId: product.cartId,
-        selAttributes: selAttributes,
-      });
+      if (getAttributes) {
+        getAttributes(selAttributes);
+      } else {
+        updateSelAttributes(product.cartId, selAttributes);
+      }
     }
   }
 
@@ -67,7 +66,9 @@ class ProductAttributes extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateSelAttributes: (item) => dispatch(updateSelAttributes(item)),
+    updateSelAttributes: (cartId, selAttributes) => {
+      return dispatch(updateSelAttributes(cartId, selAttributes));
+    },
   };
 };
 

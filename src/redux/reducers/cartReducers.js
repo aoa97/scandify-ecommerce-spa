@@ -4,59 +4,47 @@ import {
   CART_UPDATE_SELATTRIBUTES,
 } from "../contstants/cartConstants";
 
+// Compare 2 objects
+const isEqual = (a, b) => {
+  return JSON.stringify(a) === JSON.stringify(b);
+};
+
 export const cartReducer = (state = [{ selAttributes: {} }], action) => {
-  const cart = JSON.parse(localStorage.getItem("cart")) || []; // Current Cart
-
-  // Sort items to avoid mess in the array
-  const cartCompare = (a, b) => {
-    if (a.cartId < b.cartId) return -1;
-    else if (a.cartId > b.cartId) return 1;
-    else return 0;
-  };
-
   switch (action.type) {
-    /* Add item to product */
     case CART_ADD_ITEM:
-      const product = action.payload;
+      const item = action.payload;
+      const existItem = state.find(
+        (x) => x.id === item.id && isEqual(x.selAttributes, item.selAttributes)
+      );
 
-      const newCart = [...cart, product].sort(cartCompare);
-      localStorage.setItem("cart", JSON.stringify(newCart));
-      return newCart;
-
-    /* Update product Qunatity */
-    case CART_UPDATE_QTY:
-      const { cartId, qty } = action.payload;
-
-      // In case of qty = 0 => delete item & return new cart
-      if (qty <= 0) {
-        const newCart = cart
-          .filter((p) => p.cartId !== cartId)
-          .sort(cartCompare);
+      if (existItem) {
+        existItem.qty += item.qty;
+        localStorage.setItem("cart", JSON.stringify(state));
+        return [...state];
+      } else {
+        const newCart = [...state, item];
         localStorage.setItem("cart", JSON.stringify(newCart));
         return newCart;
       }
+    case CART_UPDATE_QTY:
+      const { cartId, qty } = action.payload;
+      const product = state.find((x) => x.cartId === cartId);
 
-      // Update Qty
-      const item = cart.find((p) => p.cartId === cartId);
-      item.qty = qty;
-      const filteredCart = cart.filter((p) => p.cartId !== cartId);
-      const updatedCart = [...filteredCart, item].sort(cartCompare);
-      localStorage.setItem("cart", JSON.stringify(updatedCart));
-      return updatedCart;
-
-    /* Update product selected attributes */
-    case CART_UPDATE_SELATTRIBUTES:
-      const { _cartId, selAttributes } = action.payload;
-
-      // Update
-      const _item = cart.find((p) => p.cartId === _cartId);
-      if (_item) {
-        _item.selAttributes = selAttributes;
-        const _filteredCart = cart.filter((p) => p.cartId !== _cartId);
-        const _updatedCart = [..._filteredCart, _item].sort(cartCompare);
-        localStorage.setItem("cart", JSON.stringify(_updatedCart));
-        return _updatedCart;
+      if (qty < 1) {
+        const updatedCart = state.filter((x) => x.cartId !== cartId);
+        localStorage.setItem("cart", JSON.stringify(updatedCart));
+        return updatedCart;
+      } else {
+        product.qty = qty;
+        localStorage.setItem("cart", JSON.stringify(state));
+        return [...state];
       }
+    case CART_UPDATE_SELATTRIBUTES:
+      const { cartId: _cartId, selAttributes } = action.payload;
+      const _product = state.find((x) => x.cartId === _cartId);
+      _product.selAttributes = selAttributes;
+      localStorage.setItem("cart", JSON.stringify(state));
+      return [...state];
     default:
       return state;
   }

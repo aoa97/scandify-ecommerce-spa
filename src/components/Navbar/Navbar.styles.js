@@ -65,9 +65,7 @@ export const Category = styled.li`
   text-transform: uppercase;
   color: ${({ theme }) => theme.colors.black};
 
-  ${({ active, theme }) =>
-    active &&
-    `
+  ${({ active, theme }) => active &&`
       font-weight: 600;
       color: ${theme.colors.primary};
       border-bottom: 0.2rem solid ${theme.colors.primary};

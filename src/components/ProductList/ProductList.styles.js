@@ -54,6 +54,7 @@ export const ItemName = styled.span`
 export const ItemBrand = styled.span`
   font-size: 1.8rem;
   font-weight: 500;
+  text-transform: uppercase;
   line-height: 2.88rem;
 `;
 
