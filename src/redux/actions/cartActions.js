@@ -6,11 +6,12 @@ import {
 
 export const addToCart = (product, selAttributes, qty = 1) => (dispatch, getState) => {
     const cartId = Date.now(); // UID for cart items to avoid overwriting
+
     dispatch({
       type: CART_ADD_ITEM,
       payload: { ...product, cartId, qty, selAttributes },
     });
-  };
+};
 
 export const updateQty = (cartId, qty) => (dispatch, getState) => {
   dispatch({ type: CART_UPDATE_QTY, payload: { cartId, qty } });

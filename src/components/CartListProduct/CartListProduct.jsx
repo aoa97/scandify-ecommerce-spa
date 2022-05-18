@@ -5,10 +5,13 @@ import { Container, Left, Right } from "./CartListProduct.styles";
 import { IconSlideLeft, IconSlideRight } from "../svg/IconSVG";
 import ProductAttributes from "../ProductAttributes/ProductAttributes";
 import Counter from "../Counter/Counter";
+import { connect } from "react-redux";
+import { updateSelAttributes } from "../../redux/actions/cartActions";
 
-export default class CartListProduct extends Component {
+class CartListProduct extends Component {
   state = {
     imgIndex: 0,
+    selAttributes: this.props.product?.selAttributes,
   };
 
   handlePreviousImage = (e) => {
@@ -31,9 +34,18 @@ export default class CartListProduct extends Component {
     });
   };
 
+  componentDidUpdate(prevProps, prevState) {
+    const { updateSelAttributes, product: { cartId } } = this.props;
+    const { selAttributes } = this.state;
+
+    if (prevState.selAttributes !== selAttributes) {
+      updateSelAttributes(cartId, selAttributes);
+    }
+  }
+
   render() {
     const { product: p, activeCurrency, mini } = this.props;
-    const { imgIndex } = this.state;
+    const { imgIndex, selAttributes } = this.state;
     const price = calcPrice(p.prices, activeCurrency);
 
     const LinkToProduct = ({ children, ...otherProps }) => {
@@ -54,7 +66,14 @@ export default class CartListProduct extends Component {
 
           <h3 className="price">{price}</h3>
 
-          <ProductAttributes product={p} mini={mini} />
+          <ProductAttributes
+            product={p}
+            mini={mini}
+            selAttributes={selAttributes}
+            setSelAttributes={(selAttributes) =>
+              this.setState({ selAttributes })
+            }
+          />
         </Left>
 
         <Right mini={mini}>
@@ -77,3 +96,13 @@ export default class CartListProduct extends Component {
     );
   }
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateSelAttributes: (cartId, selAttributes) => {
+      return dispatch(updateSelAttributes(cartId, selAttributes));
+    },
+  };
+};
+
+export default connect(null, mapDispatchToProps)(CartListProduct);

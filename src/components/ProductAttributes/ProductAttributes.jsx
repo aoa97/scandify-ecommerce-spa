@@ -1,6 +1,4 @@
 import { Component } from "react";
-import { connect } from "react-redux";
-import { updateSelAttributes } from "../../redux/actions/cartActions";
 import {
   AttributeBtn,
   AttributeBtns,
@@ -8,33 +6,14 @@ import {
   Container,
 } from "./ProductAttributes.styles";
 
-class ProductAttributes extends Component {
-  state = {
-    selAttributes: this.props.product.selAttributes,
-  };
-
+export default class ProductAttributes extends Component {
   handleAttributes(name, value) {
-    this.setState({
-      selAttributes: { ...this.state.selAttributes, [name]: value },
-    });
-  }
-
-  componentDidUpdate(prevProp, prevState) {
-    const { updateSelAttributes, product, getAttributes } = this.props;
-    const { selAttributes } = this.state;
-
-    if (prevState.selAttributes !== selAttributes) {
-      if (getAttributes) {
-        getAttributes(selAttributes);
-      } else {
-        updateSelAttributes(product.cartId, selAttributes);
-      }
-    }
+    const { selAttributes, setSelAttributes } = this.props;
+    setSelAttributes({ ...selAttributes, [name]: value });
   }
 
   render() {
-    const { product: p, mini, noStock } = this.props;
-    const { selAttributes } = this.state;
+    const { product: p, mini, noStock, selAttributes } = this.props;
 
     return (
       <Container>
@@ -48,10 +27,10 @@ class ProductAttributes extends Component {
                   mini={mini}
                   key={j}
                   value={x.value}
-                  active={selAttributes?.[a.name] === x?.value}
+                  active={selAttributes[a.name] === x.value}
                   noStock={noStock}
-                  swatch={a.type === "swatch" && x?.value}
-                  onClick={() => this.handleAttributes(a?.name, x?.value)}
+                  swatch={a.type === "swatch" && x.value}
+                  onClick={() => this.handleAttributes(a.name, x.value)}
                 >
                   {a.type !== "swatch" && x?.value}
                 </AttributeBtn>
@@ -63,13 +42,3 @@ class ProductAttributes extends Component {
     );
   }
 }
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    updateSelAttributes: (cartId, selAttributes) => {
-      return dispatch(updateSelAttributes(cartId, selAttributes));
-    },
-  };
-};
-
-export default connect(null, mapDispatchToProps)(ProductAttributes);

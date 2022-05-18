@@ -85,7 +85,8 @@ export default class ProductData extends Component {
           <ProductAttributes
             noStock={!p.inStock}
             product={p}
-            getAttributes={(selAttributes) => this.setState({ selAttributes })} // CB to get attrs back from child
+            selAttributes={selAttributes}
+            setSelAttributes={(selAttributes) => this.setState({ selAttributes })} 
           />
 
           <div className="price-counter">

@@ -13,9 +13,7 @@ export const cartReducer = (state = [{ selAttributes: {} }], action) => {
   switch (action.type) {
     case CART_ADD_ITEM:
       const item = action.payload;
-      const existItem = state.find(
-        (x) => x.id === item.id && isEqual(x.selAttributes, item.selAttributes)
-      );
+      const existItem = state.find((x) => x.id === item.id && isEqual(x.selAttributes, item.selAttributes));
 
       if (existItem) {
         existItem.qty += item.qty;
