@@ -9,9 +9,9 @@ export default class CartListProduct extends Component {
   };
 
   handleDecrement = () => {
-    const { setQty, qty } = this.props;
-    setQty(qty - 1);
-  };
+    const { setQty, qty, create } = this.props;
+    !create ? setQty(qty - 1) : qty > 1 && setQty(qty - 1); 
+  };   
 
   render() {
     return (

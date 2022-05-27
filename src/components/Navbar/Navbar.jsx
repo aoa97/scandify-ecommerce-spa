@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { setActiveCategory } from "../../redux/actions/categoryActions";
 import { getCurrencies } from "../../redux/actions/currenciesActions";
@@ -31,13 +31,13 @@ class Navbar extends Component {
 
   render() {
     const { cartMenu, currencyMenu } = this.state;
-    const { cart, activeCurrency, activeCategory, setActiveCategory } = this.props;
+    const { cart, activeCurrency, activeCategory, setActiveCategory, location, history } = this.props;
     const totalQty = calcTotalQty(cart);
 
     return (
       <Container>
         {/* Left [Links] */}
-        <Left>
+        <Left onClick={() => (location.pathname !== '/') && (history.push('/'))}>
           <Category active={activeCategory === "all"} onClick={() => setActiveCategory("all")}>all</Category>
           <Category active={activeCategory === "clothes"} onClick={() => setActiveCategory("clothes")}>clothes</Category>
           <Category active={activeCategory === "tech"} onClick={() => setActiveCategory("tech")}>tech</Category>
@@ -94,4 +94,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Navbar));

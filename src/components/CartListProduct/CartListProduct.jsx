@@ -1,15 +1,12 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 import { calcPrice } from "../../helpers/productHelpers";
 import { Container, Left, Right } from "./CartListProduct.styles";
 import { IconSlideLeft, IconSlideRight } from "../svg/IconSVG";
+import { updateSelAttributes, updateQty } from "../../redux/actions/cartActions";
 import ProductAttributes from "../ProductAttributes/ProductAttributes";
 import Counter from "../Counter/Counter";
-import { connect } from "react-redux";
-import {
-  updateSelAttributes,
-  updateQty,
-} from "../../redux/actions/cartActions";
 
 class CartListProduct extends Component {
   state = {
@@ -39,11 +36,7 @@ class CartListProduct extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    const {
-      updateSelAttributes,
-      updateQty,
-      product: { cartId },
-    } = this.props;
+    const { updateSelAttributes, updateQty, product: { cartId }} = this.props;
     const { selAttributes, qty } = this.state;
 
     if (prevState.selAttributes !== selAttributes) {
@@ -56,7 +49,7 @@ class CartListProduct extends Component {
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    if (nextProps.product.cartId != this.props.product.cartId) {
+    if (nextProps.product.cartId !== this.props.product.cartId) {
       this.setState({ qty: nextProps.product.qty });
     }
   }
@@ -103,7 +96,7 @@ class CartListProduct extends Component {
 
           <LinkToProduct className="imgWrapper">
             <div className="preview">
-              <img src={p.gallery[imgIndex]} alt="Product Image" />
+              <img src={p.gallery[imgIndex]} alt="Product" />
             </div>
 
             {p.gallery.length > 1 && (

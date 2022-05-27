@@ -66,6 +66,7 @@ export const Preview = styled.div`
   align-self: flex-start;
   width: 100%;
   ${flexCenter}
+
   
   img {
     aspect-ratio: 1/1;

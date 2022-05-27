@@ -69,6 +69,7 @@ export const Item = styled.div`
   padding: 1.6rem;
   position: relative;
   transition: 0.3s all ease;
+  border: 1px solid #f9f9f9;
 
   &:hover {
     cursor: pointer;
@@ -79,7 +80,9 @@ export const Item = styled.div`
     }
   }
 
-  ${({ noStock }) => noStock && `
+  ${({ noStock }) =>
+    noStock &&
+    `
       opacity: 0.5;
 
       ${ItemImg}::before {
@@ -106,16 +109,10 @@ export const Item = styled.div`
 export const List = styled.div`
   margin-top: 11.9rem;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10.3rem 4rem;
-
-  @media (max-width: 1024px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 4rem;
 
   @media (max-width: 678px) {
-    grid-template-columns: 1fr;
-
     ${Item} {
       box-shadow: 0px 4px 35px 0px #a8acb030;
 

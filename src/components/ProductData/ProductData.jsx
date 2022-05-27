@@ -98,6 +98,7 @@ export default class ProductData extends Component {
 
             {p.inStock && (
               <Counter
+                create
                 className="row"
                 cartId={p.cartId}
                 qty={qty}
