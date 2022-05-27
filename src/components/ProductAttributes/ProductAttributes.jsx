@@ -22,17 +22,17 @@ export default class ProductAttributes extends Component {
             <h4>{a?.name}:</h4>
 
             <AttributeBtns>
-              {a.items?.map((x, j) => (
+              {a?.items?.map((x, j) => (
                 <AttributeBtn
                   mini={mini}
                   key={j}
-                  value={x.value}
-                  active={selAttributes[a.name] === x.value}
+                  value={x?.value}
+                  active={selAttributes?.[a?.name] === x?.value}
                   noStock={noStock}
-                  swatch={a.type === "swatch" && x.value}
-                  onClick={() => this.handleAttributes(a.name, x.value)}
+                  swatch={a.type === "swatch" && x?.value}
+                  onClick={() => this.handleAttributes(a?.name, x?.value)}
                 >
-                  {a.type !== "swatch" && x?.value}
+                  {a?.type !== "swatch" && x?.value}
                 </AttributeBtn>
               ))}
             </AttributeBtns>

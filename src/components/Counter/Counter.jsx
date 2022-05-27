@@ -1,18 +1,16 @@
 import { Component } from "react";
-import { connect } from "react-redux";
 import { Container } from "./Counter.styles";
-import { updateQty } from "../../redux/actions/cartActions";
 import { IconMinus } from "../svg/IconSVG";
 
-class CartListProduct extends Component {
+export default class CartListProduct extends Component {
   handleIncrement = () => {
-    const { cartId, updateQty, setQty, qty } = this.props;
-    setQty ? setQty(qty + 1) : updateQty(cartId, qty + 1);
+    const { setQty, qty } = this.props;
+    setQty(qty + 1);
   };
 
   handleDecrement = () => {
-    const { cartId, updateQty, setQty, qty } = this.props;
-    setQty ? setQty(qty - 1) : updateQty(cartId, qty - 1);
+    const { setQty, qty } = this.props;
+    setQty(qty - 1);
   };
 
   render() {
@@ -31,11 +29,3 @@ class CartListProduct extends Component {
     );
   }
 }
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    updateQty: (cartId, qty) => dispatch(updateQty(cartId, qty)),
-  };
-};
-
-export default connect(null, mapDispatchToProps)(CartListProduct);

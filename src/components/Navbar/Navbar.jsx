@@ -38,9 +38,9 @@ class Navbar extends Component {
       <Container>
         {/* Left [Links] */}
         <Left>
-          <Category active={activeCategory == "all"} onClick={() => setActiveCategory("all")}>all</Category>
-          <Category active={activeCategory == "clothes"} onClick={() => setActiveCategory("clothes")}>clothes</Category>
-          <Category active={activeCategory == "tech"} onClick={() => setActiveCategory("tech")}>tech</Category>
+          <Category active={activeCategory === "all"} onClick={() => setActiveCategory("all")}>all</Category>
+          <Category active={activeCategory === "clothes"} onClick={() => setActiveCategory("clothes")}>clothes</Category>
+          <Category active={activeCategory === "tech"} onClick={() => setActiveCategory("tech")}>tech</Category>
         </Left>
 
         {/* Center [Brand] */}

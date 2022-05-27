@@ -6,12 +6,16 @@ import { IconSlideLeft, IconSlideRight } from "../svg/IconSVG";
 import ProductAttributes from "../ProductAttributes/ProductAttributes";
 import Counter from "../Counter/Counter";
 import { connect } from "react-redux";
-import { updateSelAttributes } from "../../redux/actions/cartActions";
+import {
+  updateSelAttributes,
+  updateQty,
+} from "../../redux/actions/cartActions";
 
 class CartListProduct extends Component {
   state = {
     imgIndex: 0,
     selAttributes: this.props.product?.selAttributes,
+    qty: this.props.product?.qty,
   };
 
   handlePreviousImage = (e) => {
@@ -35,17 +39,31 @@ class CartListProduct extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    const { updateSelAttributes, product: { cartId } } = this.props;
-    const { selAttributes } = this.state;
+    const {
+      updateSelAttributes,
+      updateQty,
+      product: { cartId },
+    } = this.props;
+    const { selAttributes, qty } = this.state;
 
     if (prevState.selAttributes !== selAttributes) {
       updateSelAttributes(cartId, selAttributes);
+    }
+
+    if (prevState.qty !== qty) {
+      updateQty(cartId, qty);
+    }
+  }
+
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (nextProps.product.cartId != this.props.product.cartId) {
+      this.setState({ qty: nextProps.product.qty });
     }
   }
 
   render() {
     const { product: p, activeCurrency, mini } = this.props;
-    const { imgIndex, selAttributes } = this.state;
+    const { imgIndex, selAttributes, qty } = this.state;
     const price = calcPrice(p.prices, activeCurrency);
 
     const LinkToProduct = ({ children, ...otherProps }) => {
@@ -77,7 +95,11 @@ class CartListProduct extends Component {
         </Left>
 
         <Right mini={mini}>
-          <Counter mini={mini} cartId={p.cartId} qty={p.qty} />
+          <Counter
+            mini={mini}
+            qty={qty}
+            setQty={(qty) => this.setState({ qty })}
+          />
 
           <LinkToProduct className="imgWrapper">
             <div className="preview">
@@ -102,6 +124,7 @@ const mapDispatchToProps = (dispatch) => {
     updateSelAttributes: (cartId, selAttributes) => {
       return dispatch(updateSelAttributes(cartId, selAttributes));
     },
+    updateQty: (cartId, qty) => dispatch(updateQty(cartId, qty)),
   };
 };
 

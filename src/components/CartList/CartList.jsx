@@ -41,7 +41,7 @@ class CartList extends Component {
             {/* Header */}
             {mini ? (
               <h2>
-                My Bag, <span>{cart.length} items</span>
+                My Bag, <span>{totalQty} items</span>
               </h2>
             ) : (
               <h1>Cart</h1>
